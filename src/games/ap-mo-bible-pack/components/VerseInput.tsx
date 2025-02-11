@@ -102,12 +102,12 @@ export const VerseInput: React.FC<VerseInputProps> = ({
               {isListening ? (
                 <>
                   <MicOff className="w-4 h-4" />
-                  <span>Stop Recording</span>
+                  <span>Stop Speaking</span>
                 </>
               ) : (
                 <>
                   <Mic className="w-4 h-4" />
-                  <span>Start Recording</span>
+                  <span>Start Speaking</span>
                 </>
               )}
             </Button>
