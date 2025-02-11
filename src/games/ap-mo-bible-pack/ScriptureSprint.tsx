@@ -14,6 +14,7 @@ import confetti from 'canvas-confetti';
 export const ScriptureSprint: React.FC = () => {
   const [showSummary, setShowSummary] = useState(false);
   const [allFailedVerses, setAllFailedVerses] = useState<VerseAttempt[]>([]);
+  const [inputValue, setInputValue] = useState('');
 
   const {
     currentVerse,
@@ -59,6 +60,7 @@ export const ScriptureSprint: React.FC = () => {
     
     endRound(score);
     resetGame();
+    setInputValue('');
   }, [calculateScore, handleScoreUpdate, endRound, resetGame, settings, timeLeft, currentRound, failedVerses]);
 
   useEffect(() => {
@@ -76,6 +78,7 @@ export const ScriptureSprint: React.FC = () => {
   const handleGameStart = useCallback((gameSettings: GameSettings) => {
     setShowSummary(false);
     setAllFailedVerses([]);
+    setInputValue('');
     analyticsService.trackGameStart('scripture-sprint', gameSettings);
     initializeGame(
       gameSettings.packType, 
@@ -98,6 +101,7 @@ export const ScriptureSprint: React.FC = () => {
       incrementVersesCompleted();
       setTimeout(() => {
         getNextVerse();
+        setInputValue(''); // Clear input only when moving to next verse
       }, 1500);
     }
   }, [checkAnswer, incrementVersesCompleted, getNextVerse]);
@@ -105,6 +109,7 @@ export const ScriptureSprint: React.FC = () => {
   const handlePlayAgain = useCallback(() => {
     setShowSummary(false);
     setAllFailedVerses([]);
+    setInputValue('');
     resetGame();
     if (settings) {
       startGame(settings);
@@ -157,6 +162,8 @@ export const ScriptureSprint: React.FC = () => {
                   onSubmit={handleAnswerSubmit}
                   disabled={timeLeft === 0}
                   attemptsLeft={feedback?.attemptsLeft}
+                  value={inputValue}
+                  onChange={setInputValue}
                 />
               </div>
             </>
