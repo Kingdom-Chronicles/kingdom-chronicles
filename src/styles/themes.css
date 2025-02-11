@@ -324,3 +324,37 @@
   background-color: var(--pack-wisdom-bg);
   color: var(--pack-wisdom-text);
 }
+
+/* Form Select and Input Styles */
+.form-select,
+.form-input {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--input-border);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.form-select:focus,
+.form-input:focus {
+  border-color: var(--input-focus-ring);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+/* Night Theme Overrides */
+.theme-night .form-select,
+.theme-night .form-input {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+.theme-night .form-select:focus,
+.theme-night .form-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+/* Disable hover effect for table rows in night theme */
+.theme-night .leaderboard-table tr:hover {
+  background-color: inherit; /* Keep the background color unchanged */
+}
