@@ -28,11 +28,11 @@ const testimonials: Testimonial[] = [
     feedback: "Kingdom Chronicles pushed me out of my comfort zone! Need to read more! 📖✨",
     avatar: "/alvin.jpg"
   },
-  //{
-   // name: "Agatha Rachael Akullu",
-    //feedback: "Kingdom Chronicles transformed my faith—challenged me to read more and grow spiritually! 🙏✨",
-   // avatar: "https://i.pravatar.cc/100?img=2"
- // }
+  {
+    name: "Agatha Rachael Akullu",
+    feedback: "Kingdom Chronicles transformed my faith—challenged me to read more and grow spiritually! 🙏✨",
+    avatar: "/agatha.jpg"
+  }
 ];
 
 const NORMAL_SPEED = 80;
