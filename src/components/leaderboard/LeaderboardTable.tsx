@@ -33,7 +33,7 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({
 
   return (
     <div className="overflow-hidden">
-      <table className="min-w-full">
+      <table className="leaderboard-table min-w-full">
         <thead>
           <tr className="border-b border-gray-200">
             <th className="px-6 py-3 text-left text-xs font-medium text-theme-secondary uppercase tracking-wider">
@@ -51,7 +51,7 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({
           {entries.map((entry) => (
             <tr 
               key={`${entry.username}-${entry.rank}`} 
-              className="hover:bg-gray-50 transition-colors"
+              className="transition-colors"
             >
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
