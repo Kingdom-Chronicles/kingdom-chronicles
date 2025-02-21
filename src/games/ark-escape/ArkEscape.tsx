@@ -7,6 +7,7 @@ import { RoundTimer } from '../../components/game/RoundTimer';
 import { ArkGameSetup } from './components/ArkGameSetup';
 import { ResourceList } from './components/ResourceList';
 import { GameStats } from './components/GameStats';
+import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
 import type { GameSettings } from './types';
 import { analyticsService } from '../../services/analytics/analyticsService';
 
@@ -61,6 +62,7 @@ export const ArkEscape: React.FC = () => {
 
   return (
     <div className="theme-base theme-ark-escape min-h-screen">
+      <MobileGameHeader title="Ark Escape" />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="content-container">
           {!isPlaying || !settings ? (

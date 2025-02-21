@@ -8,7 +8,8 @@ import { GameSetup } from './components/GameSetup';
 import { BookDisplay } from './components/BookDisplay';
 import { TestamentSelector } from './components/TestamentSelector';
 import { GameOver } from './components/GameOver';
-import type { GameSettings, Testament, GameMode } from './types';
+import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
+import type { GameSettings, Testament } from './types';
 import { analyticsService } from '../../services/analytics/analyticsService';
 import confetti from 'canvas-confetti';
 
@@ -84,6 +85,7 @@ export const TestamentQuiz: React.FC = () => {
 
   return (
     <div className="theme-base theme-testament-quiz min-h-screen">
+      <MobileGameHeader title="Testament Quiz" />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="content-container">
           {!isPlaying || !settings ? (

@@ -7,6 +7,7 @@ import { GameSetup } from './components/GameSetup';
 import { VerseDisplay } from './components/VerseDisplay';
 import { VerseInput } from './components/VerseInput';
 import { GameSummary } from './components/GameSummary';
+import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
 import type { GameSettings, VerseAttempt } from './types';
 import { analyticsService } from '../../services/analytics/analyticsService';
 import confetti from 'canvas-confetti';
@@ -101,7 +102,7 @@ export const ScriptureSprint: React.FC = () => {
       incrementVersesCompleted();
       setTimeout(() => {
         getNextVerse();
-        setInputValue(''); // Clear input only when moving to next verse
+        setInputValue('');
       }, 1500);
     }
   }, [checkAnswer, incrementVersesCompleted, getNextVerse]);
@@ -118,6 +119,7 @@ export const ScriptureSprint: React.FC = () => {
 
   return (
     <div className="theme-base theme-scripture-sprint min-h-screen">
+      <MobileGameHeader title="Scripture Sprint" />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="content-container">
           {showSummary ? (

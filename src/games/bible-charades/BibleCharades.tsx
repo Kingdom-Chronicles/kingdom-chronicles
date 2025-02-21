@@ -5,6 +5,7 @@ import { GameSetup } from './components/GameSetup';
 import { StoryDisplay } from './components/StoryDisplay';
 import { TeamScores } from './components/TeamScores';
 import { GameOver } from './components/GameOver';
+import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
 import { useGameState } from './hooks/useGameState';
 import confetti from 'canvas-confetti';
 
@@ -62,6 +63,7 @@ export const BibleCharades: React.FC = () => {
 
   return (
     <div className="theme-base theme-bible-charades min-h-screen">
+      <MobileGameHeader title="Bible Charades" />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="content-container">
           {!isPlaying ? (

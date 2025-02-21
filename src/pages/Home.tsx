@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { FeatureCard } from "../components/features/FeatureCard";
 import { GameIcon, UsersIcon, TrophyIcon } from "../components/icons";
-import { ThemeSelector } from "../components/ui/ThemeSelector";
 import { useTheme } from "../hooks/useTheme";
-import { ScrollingTestimonialCarousel } from "../components/layout/ScrollingTestimonialCarousel"; // Import the carousel
+import { ScrollingTestimonialCarousel } from "../components/layout/ScrollingTestimonialCarousel";
+import { LoginModal } from "../components/auth/LoginModal";
+import { useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const features = [
   {
@@ -25,7 +27,17 @@ const features = [
 ];
 
 export const Home: React.FC = () => {
-  const { theme, setTheme } = useTheme("home");
+  const { theme } = useTheme("home");
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const { isAuthenticated } = useAuthStore();
+
+  const handleGetStarted = () => {
+    if (!isAuthenticated) {
+      setShowLoginModal(true);
+    } else {
+      window.location.href = '/games';
+    }
+  };
 
   return (
     <div className={`theme-base min-h-screen ${theme === "night" ? "bg-gray-900" : "bg-gradient-to-b from-indigo-50 to-white"}`}>
@@ -39,9 +51,9 @@ export const Home: React.FC = () => {
           </p>
 
           <div className="flex justify-center space-x-4 mb-16 fade-in" style={{ animationDelay: "400ms" }}>
-            <Link to="/games">
-              <Button size="lg" className="ripple hover-pulse">Get Started</Button>
-            </Link>
+            <Button onClick={handleGetStarted} size="lg" className="ripple hover-pulse">
+              Get Started
+            </Button>
             <Link to="/games">
               <Button variant="outline" size="lg" className="ripple hover-pulse">Browse Games</Button>
             </Link>
@@ -59,15 +71,17 @@ export const Home: React.FC = () => {
             ))}
           </div>
 
-      {/* 🏆 Testimonial Section - Carousel */}
-      <div className="mt-20 text-center">
-        <h2 className="text-3xl font-bold mb-6">What Our Players Say</h2>
-        {/* Testimonial Carousel with sliding effect */}
-        <ScrollingTestimonialCarousel />
-      </div>
+          <div className="mt-20 text-center">
+            <h2 className="text-3xl font-bold mb-6">What Our Players Say</h2>
+            <ScrollingTestimonialCarousel />
+          </div>
         </div>
       </div>
-      <ThemeSelector currentTheme={theme} onThemeChange={setTheme} />
+
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
     </div>
   );
 };

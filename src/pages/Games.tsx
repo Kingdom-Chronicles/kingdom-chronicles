@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Building2, Ship, Theater, Book, BookOpen, Scroll } from 'lucide-react';
-import { ThemeSelector } from '../components/ui/ThemeSelector';
 import { useTheme } from '../hooks/useTheme';
 
 export const games = [
@@ -56,8 +55,6 @@ export const games = [
 ];
 
 export const getGameName = (gameType: string | undefined): string => {
-
-  console.log("checking my game type",gameType)
   if (!gameType) return 'Unknown Game';
   const game = games.find(g => g.id === gameType);
   return game ? game.title : 'Unknown Game';
@@ -65,7 +62,7 @@ export const getGameName = (gameType: string | undefined): string => {
 
 export const Games: React.FC = () => {
   const [visibleGames, setVisibleGames] = useState<number[]>([]);
-  const { theme, setTheme } = useTheme('games');
+  const { theme } = useTheme('games');
 
   useEffect(() => {
     const showGames = () => {
@@ -125,8 +122,6 @@ export const Games: React.FC = () => {
           ))}
         </div>
       </div>
-
-      <ThemeSelector currentTheme={theme} onThemeChange={setTheme} />
     </div>
   );
 };

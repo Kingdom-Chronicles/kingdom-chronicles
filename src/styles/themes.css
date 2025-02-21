@@ -15,30 +15,6 @@
   --input-border: #e2e8f0;
   --input-focus-ring: #667eea;
 
-  /* Navbar Colors */
-  --navbar-bg: #ffffff;
-  --navbar-text: #1a202c;
-  --navbar-hover: #f7fafc;
-
-  /* Game-specific Colors */
-  --testament-old-bg: #fef3c7;
-  --testament-old-border: #f59e0b;
-  --testament-old-text: #92400e;
-  --testament-new-bg: #e0e7ff;
-  --testament-new-border: #4f46e5;
-  --testament-new-text: #3730a3;
-
-  /* Pack Selection Colors */
-  --pack-healing-bg: #fce7f3;
-  --pack-healing-border: #ec4899;
-  --pack-healing-text: #831843;
-  --pack-wealth-bg: #fef3c7;
-  --pack-wealth-border: #f59e0b;
-  --pack-wealth-text: #92400e;
-  --pack-wisdom-bg: #dbeafe;
-  --pack-wisdom-border: #2563eb;
-  --pack-wisdom-text: #1e40af;
-
   /* Theme Colors */
   --theme-bg: #ffffff;
   --theme-card: #f8fafc;
@@ -47,7 +23,7 @@
   --theme-border: #e2e8f0;
 }
 
-/* Night Theme Colors */
+/* Night Theme */
 .theme-night {
   --text-primary: #ffffff;
   --text-secondary: #e2e8f0;
@@ -58,31 +34,6 @@
   --input-border: #4a5568;
   --input-focus-ring: #667eea;
 
-  /* Navbar Colors - Night Theme */
-  --navbar-bg: #1a202c;
-  --navbar-text: #ffffff;
-  --navbar-hover: #2d3748;
-
-  /* Game-specific Colors - Night Theme */
-  --testament-old-bg: rgba(245, 158, 11, 0.2);
-  --testament-old-border: #f59e0b;
-  --testament-old-text: #fcd34d;
-  --testament-new-bg: rgba(79, 70, 229, 0.2);
-  --testament-new-border: #4f46e5;
-  --testament-new-text: #a5b4fc;
-
-  /* Pack Selection Colors - Night Theme */
-  --pack-healing-bg: rgba(236, 72, 153, 0.2);
-  --pack-healing-border: #ec4899;
-  --pack-healing-text: #fbcfe8;
-  --pack-wealth-bg: rgba(245, 158, 11, 0.2);
-  --pack-wealth-border: #f59e0b;
-  --pack-wealth-text: #fcd34d;
-  --pack-wisdom-bg: rgba(37, 99, 235, 0.2);
-  --pack-wisdom-border: #2563eb;
-  --pack-wisdom-text: #93c5fd;
-
-  /* Theme Colors */
   --theme-bg: #1a202c;
   --theme-card: #2d3748;
   --theme-primary: #f7fafc;
@@ -90,99 +41,34 @@
   --theme-border: #4a5568;
 }
 
-/* Classic Theme Colors */
-.theme-classic {
-  --text-primary: #2d3748;
-  --text-secondary: #4a5568;
-  --text-tertiary: #718096;
-  
-  --input-text: #2d3748;
-  --input-bg: #ffffff;
-  --input-border: #cbd5e0;
-  --input-focus-ring: #667eea;
-
-  /* Navbar Colors - Classic Theme */
-  --navbar-bg: #ffffff;
-  --navbar-text: #2d3748;
-  --navbar-hover: #edf2f7;
-}
-
-/* Base Theme */
-.theme-base {
-  min-height: 100vh;
-  transition: all 0.5s ease-in-out;
-  color: var(--text-primary);
-}
-
-/* Navbar Styles */
-.navbar {
-  background-color: var(--navbar-bg);
-  color: var(--navbar-text);
-}
-
-.navbar-link {
-  color: var(--text-secondary);
-}
-
-.navbar-link:hover {
-  color: var(--text-primary);
-  background-color: var(--navbar-hover);
-}
-
-/* Content Container */
-.content-container {
-  background: var(--overlay-light);
-  backdrop-filter: blur(var(--blur-amount));
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  color: var(--text-primary);
-}
-
-/* Form Elements */
-.form-label {
-  color: var(--text-primary) !important;
-}
-
-.form-input {
-  color: var(--input-text) !important;
-  background-color: var(--input-bg) !important;
-  border-color: var(--input-border) !important;
-}
-
-.form-input:focus {
-  border-color: var(--input-focus-ring) !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25) !important;
-}
-
-/* Card Elements */
-.card {
-  background-color: var(--input-bg);
-  color: var(--text-primary);
-}
-
-.card-text {
-  color: var(--text-secondary);
-}
-
-/* Night Theme Overrides */
-.theme-night .content-container {
-  background: rgba(17, 24, 39, 0.95);
-}
-
-.theme-night .bg-white {
-  background-color: #1a202c !important;
-}
-
+/* Night Theme Text Overrides */
 .theme-night .text-gray-600,
 .theme-night .text-gray-700,
-.theme-night .text-gray-800 {
+.theme-night .text-gray-800,
+.theme-night .text-gray-900 {
   color: var(--text-secondary) !important;
 }
 
-.theme-night .border-gray-200,
-.theme-night .border-gray-300 {
-  border-color: #4a5568 !important;
+.theme-night h1,
+.theme-night h2,
+.theme-night h3,
+.theme-night h4,
+.theme-night h5,
+.theme-night h6,
+.theme-night .text-black {
+  color: var(--text-primary) !important;
+}
+
+.theme-night .form-label,
+.theme-night label,
+.theme-night input,
+.theme-night select,
+.theme-night textarea {
+  color: var(--text-primary) !important;
+}
+
+.theme-night button:not(.bg-indigo-600):not(.bg-green-600):not(.bg-red-600) {
+  color: var(--text-primary);
 }
 
 /* Game-specific backgrounds */
@@ -228,133 +114,131 @@
   background-attachment: fixed;
 }
 
-/* Utility Classes */
-.text-theme-primary {
-  color: var(--text-primary) !important;
-}
-
-.text-theme-secondary {
-  color: var(--text-secondary) !important;
-}
-
-.text-theme-tertiary {
-  color: var(--text-tertiary) !important;
-}
-
-.bg-theme-bg {
-  background-color: var(--theme-bg);
-}
-
-.bg-theme-card {
-  background-color: var(--theme-card);
-}
-
-.text-theme-primary {
-  color: var(--theme-primary);
-}
-
-.text-theme-secondary {
-  color: var(--theme-secondary);
-}
-
-.border-theme {
-  border-color: var(--theme-border);
-}
-
-/* Game Interface */
-.game-interface {
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* Stats Container */
-.stats-container {
-  background: var(--input-bg);
+/* Content Container */
+.content-container {
+  background: var(--overlay-light);
   backdrop-filter: blur(var(--blur-amount));
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   color: var(--text-primary);
 }
 
-/* Testament Quiz Styles */
-.testament-button {
-  transition: all 0.3s ease;
+.theme-night .content-container {
+  background: var(--overlay-dark);
 }
 
-.testament-button.old {
-  background-color: var(--testament-old-bg);
-  border-color: var(--testament-old-border);
-  color: var(--testament-old-text);
+/* Night Theme Card Overrides */
+.theme-night .card,
+.theme-night .bg-white {
+  background-color: var(--theme-card) !important;
+  color: var(--text-primary);
 }
 
-.testament-button.new {
-  background-color: var(--testament-new-bg);
-  border-color: var(--testament-new-border);
-  color: var(--testament-new-text);
+/* Testament Quiz Night Theme */
+.theme-night .testament-button.old {
+  background-color: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fcd34d;
 }
 
-/* Pack Selection Styles */
-.pack-button {
-  transition: all 0.3s ease;
+.theme-night .testament-button.new {
+  background-color: rgba(79, 70, 229, 0.2);
+  border-color: #4f46e5;
+  color: #a5b4fc;
 }
 
-.pack-button.healing {
-  border-color: var(--pack-healing-border);
+/* Scripture Sprint Night Theme */
+.theme-night .pack-button {
+  background-color: var(--theme-card);
 }
 
-.pack-button.healing.active {
-  background-color: var(--pack-healing-bg);
-  color: var(--pack-healing-text);
+.theme-night .pack-button.healing.active {
+  background-color: rgba(236, 72, 153, 0.2);
+  border-color: #ec4899;
+  color: #fbcfe8;
 }
 
-.pack-button.wealth {
-  border-color: var(--pack-wealth-border);
+.theme-night .pack-button.wealth.active {
+  background-color: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fcd34d;
 }
 
-.pack-button.wealth.active {
-  background-color: var(--pack-wealth-bg);
-  color: var(--pack-wealth-text);
+.theme-night .pack-button.wisdom.active {
+  background-color: rgba(37, 99, 235, 0.2);
+  border-color: #2563eb;
+  color: #93c5fd;
 }
 
-.pack-button.wisdom {
-  border-color: var(--pack-wisdom-border);
+/* Form Elements */
+.form-label {
+  color: var(--text-primary) !important;
 }
 
-.pack-button.wisdom.active {
-  background-color: var(--pack-wisdom-bg);
-  color: var(--pack-wisdom-text);
-}
-
-/* Form Select and Input Styles */
-.form-select,
 .form-input {
-  background-color: var(--input-bg);
-  color: var(--input-text);
-  border-color: var(--input-border);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  color: var(--input-text) !important;
+  background-color: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
 }
 
-.form-select:focus,
 .form-input:focus {
-  border-color: var(--input-focus-ring);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+  border-color: var(--input-focus-ring) !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25) !important;
 }
 
-/* Night Theme Overrides */
-.theme-night .form-select,
-.theme-night .form-input {
-  background-color: #2d3748;
-  color: #e2e8f0;
-  border-color: #4a5568;
+/* Mobile Navigation and Header Styles */
+@media (max-width: 768px) {
+  .content-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 4rem;
+    margin-bottom: 5rem;
+  }
+
+  .game-interface {
+    padding-top: 1rem;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  button, 
+  .button,
+  .form-select,
+  .form-input {
+    min-height: 44px;
+  }
 }
 
-.theme-night .form-select:focus,
-.theme-night .form-input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+/* Theme-aware Mobile Navigation */
+.mobile-nav {
+  background-color: var(--theme-bg);
+  border-top: 1px solid var(--theme-border);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Disable hover effect for table rows in night theme */
-.theme-night .leaderboard-table tr:hover {
-  background-color: inherit; /* Keep the background color unchanged */
+.mobile-nav a {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.mobile-nav a.active {
+  color: var(--primary-600);
+}
+
+/* Theme-aware Mobile Header */
+.mobile-header {
+  background-color: var(--theme-bg);
+  border-bottom: 1px solid var(--theme-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-header h1 {
+  color: var(--text-primary);
+}
+
+.mobile-header button {
+  color: var(--text-secondary);
 }

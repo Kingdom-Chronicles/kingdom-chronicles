@@ -27,23 +27,29 @@ export const TestamentSelector: React.FC<TestamentSelectorProps> = ({
         <button
           onClick={() => onSelect('old')}
           disabled={disabled}
-          className={`testament-button old flex flex-col items-center p-6 rounded-lg border-2 transition-colors ${
-            disabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'
-          }`}
+          className={`
+            flex flex-col items-center p-6 rounded-lg border-2 transition-colors
+            ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+            bg-amber-50 border-amber-500 hover:bg-amber-100
+            disabled:bg-gray-100 disabled:border-gray-200
+          `}
         >
-          <Scroll className="w-12 h-12 mb-2" />
-          <span className="text-lg font-semibold">Old Testament</span>
+          <Scroll className="w-12 h-12 text-amber-600 mb-2" />
+          <span className="text-lg font-semibold text-amber-900">Old Testament</span>
         </button>
 
         <button
           onClick={() => onSelect('new')}
           disabled={disabled}
-          className={`testament-button new flex flex-col items-center p-6 rounded-lg border-2 transition-colors ${
-            disabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'
-          }`}
+          className={`
+            flex flex-col items-center p-6 rounded-lg border-2 transition-colors
+            ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+            bg-indigo-50 border-indigo-500 hover:bg-indigo-100
+            disabled:bg-gray-100 disabled:border-gray-200
+          `}
         >
-          <BookOpen className="w-12 h-12 mb-2" />
-          <span className="text-lg font-semibold">New Testament</span>
+          <BookOpen className="w-12 h-12 text-indigo-600 mb-2" />
+          <span className="text-lg font-semibold text-indigo-900">New Testament</span>
         </button>
       </div>
     </div>

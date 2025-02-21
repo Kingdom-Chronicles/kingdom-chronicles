@@ -8,6 +8,7 @@ import { GameSetup } from './components/GameSetup';
 import { VerseDisplay } from './components/VerseDisplay';
 import { BibleInterface } from './components/BibleInterface';
 import { GameOver } from './components/GameOver';
+import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
 import type { GameSettings } from './types';
 import { analyticsService } from '../../services/analytics/analyticsService';
 import confetti from 'canvas-confetti';
@@ -77,6 +78,7 @@ export const BibleVerse: React.FC = () => {
 
   return (
     <div className="theme-base theme-bible-verse min-h-screen">
+      <MobileGameHeader title="Bible Verse" />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="content-container">
           {!isPlaying || !settings ? (

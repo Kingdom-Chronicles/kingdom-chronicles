@@ -3,13 +3,13 @@ import { BuildingSelector } from './components/BuildingSelector';
 import { GameGrid } from './components/GameGrid';
 import { GameStats } from './components/GameStats';
 import { GameSetup } from './components/GameSetup';
+import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
 import { useGameState } from './hooks/useGameState';
 import { useRoundManager } from './hooks/useRoundManager';
 import { useGameScore } from '../../hooks/useGameScore';
 import { RoundTimer } from '../../components/game/RoundTimer';
 import type { GameSettings } from './types';
 import { analyticsService } from '../../services/analytics/analyticsService';
-
 
 export const KingdomBuilders: React.FC = () => {
   const {
@@ -67,6 +67,7 @@ export const KingdomBuilders: React.FC = () => {
 
   return (
     <div className="theme-base theme-kingdom-builders min-h-screen">
+      <MobileGameHeader title="Kingdom Builders" />
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="content-container">
           {!isPlaying || !settings ? (

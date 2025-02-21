@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
+import { MobileNav } from './components/layout/MobileNav';
 import { Home } from './pages/Home';
 import { Games } from './pages/Games';
 import { Leaderboard } from './pages/Leaderboard';
@@ -59,19 +60,22 @@ const App: React.FC = () => {
       <AnalyticsTracker />
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/games" element={<Games />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/games/kingdom-builders" element={<KingdomBuilders />} />
-          <Route path="/games/ark-escape" element={<ArkEscape />} />
-          <Route path="/games/bible-charades" element={<BibleCharades />} />
-          <Route path="/games/bible-verse" element={<BibleVerse />} />
-          <Route path="/games/testament-quiz" element={<TestamentQuiz />} />
-          <Route path="/games/scripture-sprint" element={<ScriptureSprint />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="md:pb-0 pb-16"> {/* Add padding for mobile nav */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/games/kingdom-builders" element={<KingdomBuilders />} />
+            <Route path="/games/ark-escape" element={<ArkEscape />} />
+            <Route path="/games/bible-charades" element={<BibleCharades />} />
+            <Route path="/games/bible-verse" element={<BibleVerse />} />
+            <Route path="/games/testament-quiz" element={<TestamentQuiz />} />
+            <Route path="/games/scripture-sprint" element={<ScriptureSprint />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+        <MobileNav />
       </div>
     </Router>
   );
