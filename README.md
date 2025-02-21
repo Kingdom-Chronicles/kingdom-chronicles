@@ -192,3 +192,106 @@ For support, email masikotimo@gmail.com or join our Discord server.
 - [ ] More Bible translations
 - [ ] Advanced analytics
 - [ ] Social features
+
+
+
+# Mobile App Assets
+
+This directory contains the image assets needed for the mobile app version of Kingdom Chronicles.
+
+## Splash Screen
+URL: https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2400
+- A beautiful, high-resolution image of an open Bible with soft lighting
+- Dimensions: 2400x2400px (1:1 ratio)
+- Used for the initial loading screen
+- Provides immediate visual context for the app's biblical theme
+
+## Favicon
+URL: https://images.unsplash.com/photo-1533000971552-6a962ff0b9f9?q=80&w=192
+- A simplified crown icon in gold/yellow on a deep blue background
+- Dimensions: 192x192px
+- Used for browser tabs and bookmarks
+- Matches the app's "Kingdom" theme
+
+## Adaptive Icon
+URL: https://images.unsplash.com/photo-1578165219176-ece04edbd053?q=80&w=1024
+- A crown symbol with a gradient background
+- Foreground Layer: Crown icon in gold (#FFD700)
+- Background Layer: Gradient from deep blue (#1E3A8A) to royal purple (#5B21B6)
+- Dimensions: 1024x1024px
+- Adaptive shape support for different Android versions
+
+## App Icon
+URL: https://images.unsplash.com/photo-1516912481808-3406841bd33c?q=80&w=512
+- A stylized crown with a scroll design
+- Dimensions: 512x512px
+- Recognizable at small sizes
+- Matches the app's branding
+
+## Usage Guidelines
+
+1. Splash Screen:
+   - Center the app logo and name
+   - Use a subtle fade transition
+   - Keep text minimal
+
+2. Favicon:
+   - Ensure it's recognizable at 16x16px
+   - Use simple shapes and high contrast
+
+3. Adaptive Icon:
+   - Test on different Android shapes (circle, square, rounded square)
+   - Maintain safe zone in center 66% of the image
+   - Use vector assets when possible
+
+4. App Icon:
+   - Test visibility on both light and dark backgrounds
+   - Ensure readability at small sizes
+   - Follow platform-specific guidelines (iOS/Android)
+
+## Image Specifications
+
+### iOS Requirements:
+- App Icon: 1024x1024px (App Store)
+- Spotlight: 40x40px, 80x80px, 120x120px
+- Settings: 29x29px, 58x58px, 87x87px
+- App Icon: 60x60px, 120x120px, 180x180px
+
+### Android Requirements:
+- Play Store: 512x512px
+- Adaptive Icon: 108x108px - 432x432px
+- Legacy Icon: 48x48px - 192x192px
+
+## Color Palette
+
+Primary Colors:
+- Royal Blue: #1E40AF
+- Deep Purple: #5B21B6
+- Gold: #FFD700
+
+Accent Colors:
+- Light Blue: #60A5FA
+- Light Purple: #A78BFA
+- Light Gold: #FDE68A
+
+## Implementation Notes
+
+1. For iOS:
+   ```xml
+   <key>UILaunchStoryboardName</key>
+   <string>LaunchScreen</string>
+   ```
+
+2. For Android:
+   ```xml
+   <adaptive-icon>
+     <background>@drawable/ic_launcher_background</background>
+     <foreground>@drawable/ic_launcher_foreground</foreground>
+   </adaptive-icon>
+   ```
+
+3. For Web:
+   ```html
+   <link rel="icon" type="image/png" href="/favicon.png">
+   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+   ```

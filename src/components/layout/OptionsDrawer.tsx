@@ -22,7 +22,7 @@ export const OptionsDrawer: React.FC<OptionsDrawerProps> = ({ isOpen, onClose })
     setTheme(nextTheme);
   };
 
-  if (!isOpen) return null;
+  if (!isOpen && !showLoginModal) return null;
 
   return (
     <>
@@ -74,10 +74,7 @@ export const OptionsDrawer: React.FC<OptionsDrawerProps> = ({ isOpen, onClose })
 
             {!isAuthenticated && (
               <button
-                onClick={() => {
-                  setShowLoginModal(true);
-                  onClose();
-                }}
+                onClick={() => setShowLoginModal(true)}
                 className={`w-full flex items-center p-3 rounded-lg ${
                   theme === 'night'
                     ? 'text-gray-300 hover:bg-gray-700'
@@ -96,7 +93,10 @@ export const OptionsDrawer: React.FC<OptionsDrawerProps> = ({ isOpen, onClose })
 
       <LoginModal
         isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
+        onClose={() => {
+          setShowLoginModal(false);
+          onClose();
+        }}
       />
     </>
   );

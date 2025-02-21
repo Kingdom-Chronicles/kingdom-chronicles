@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
-import { authService } from '../../services/auth';
 import { Button } from '../ui/Button';
 import { SignUpModal } from './SignUpModal';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -17,6 +17,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const login = useAuthStore((state) => state.login);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +40,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setEmail('');
     setPassword('');
     setError('Account created! Please log in.');
+  };
+
+  const handleContinueAsGuest = () => {
+    onClose();
+    navigate('/games');
   };
 
   if (!isOpen) return null;
@@ -127,7 +133,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           </p>
           <Button
             variant="outline"
-            onClick={onClose}
+            onClick={handleContinueAsGuest}
             className="w-full mt-4"
             disabled={isLoading}
           >
