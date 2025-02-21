@@ -44,23 +44,23 @@ export const Leaderboard: React.FC = () => {
   );
 
   return (
-    <div className={`theme-base min-h-screen ${theme === 'night' ? 'bg-gray-900' : 'bg-gradient-to-b from-indigo-50 to-white'}`}>
+    <div className={`min-h-screen ${theme === 'night' ? 'bg-gray-900' : 'bg-gradient-to-b from-indigo-50 to-white'}`}>
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8 text-theme-primary">
+        <h1 className={`text-3xl font-bold text-center mb-8 ${theme === 'night' ? 'text-white' : 'text-gray-900'}`}>
           Global Leaderboard
         </h1>
 
-        <div className="card">
+        <div className={`rounded-lg shadow-md p-6 ${theme === 'night' ? 'bg-gray-800' : 'bg-white'}`}>
           <div className="mb-6 flex flex-col sm:flex-row gap-4">
             {/* Game Type Filter */}
             <select
               value={selectedGame}
               onChange={(e) => setSelectedGame(e.target.value)}
-              className={`form-select rounded-lg border-gray-300 flex-1 ${
+              className={`w-full sm:flex-1 px-3 py-2 rounded-lg border ${
                 theme === 'night' 
                   ? 'bg-gray-700 border-gray-600 text-white' 
-                  : 'bg-white text-gray-900'
-              }`}
+                  : 'bg-white border-gray-300 text-gray-900'
+              } focus:outline-none focus:ring-2 focus:ring-indigo-500`}
             >
               {gameOptions.map(game => (
                 <option 
@@ -80,11 +80,11 @@ export const Leaderboard: React.FC = () => {
                 placeholder="Search by player name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`form-input w-full rounded-lg border-gray-300 ${
+                className={`w-full px-3 py-2 rounded-lg border ${
                   theme === 'night'
                     ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                    : 'bg-white text-gray-900 placeholder-gray-500'
-                }`}
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                } focus:outline-none focus:ring-2 focus:ring-indigo-500`}
               />
             </div>
           </div>
@@ -93,6 +93,7 @@ export const Leaderboard: React.FC = () => {
             entries={filteredEntries} 
             isLoading={isLoading}
             selectedGame={selectedGame}
+            theme={theme}
           />
         </div>
       </div>

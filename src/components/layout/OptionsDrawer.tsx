@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { X, Palette, MessageSquare, LogIn } from 'lucide-react';
 import { useThemeStore } from '../../store/useThemeStore';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -14,6 +14,7 @@ export const OptionsDrawer: React.FC<OptionsDrawerProps> = ({ isOpen, onClose })
   const { theme, setTheme } = useThemeStore();
   const { isAuthenticated } = useAuthStore();
   const [showLoginModal, setShowLoginModal] = React.useState(false);
+  const location = useLocation();
 
   const handleThemeChange = () => {
     const themes = ['default', 'night', 'classic'] as const;
@@ -23,6 +24,10 @@ export const OptionsDrawer: React.FC<OptionsDrawerProps> = ({ isOpen, onClose })
   };
 
   if (!isOpen && !showLoginModal) return null;
+
+  // Check if we should hide the theme button
+  const isLeaderboardPage = location.pathname === '/leaderboard';
+  const shouldHideThemeButton = isLeaderboardPage && theme === 'night';
 
   return (
     <>
@@ -47,17 +52,19 @@ export const OptionsDrawer: React.FC<OptionsDrawerProps> = ({ isOpen, onClose })
           </div>
 
           <div className="space-y-4">
-            <button
-              onClick={handleThemeChange}
-              className={`w-full flex items-center p-3 rounded-lg ${
-                theme === 'night'
-                  ? 'text-gray-300 hover:bg-gray-700'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              <Palette className="w-5 h-5 mr-3" />
-              <span>Change Theme ({theme})</span>
-            </button>
+            {!shouldHideThemeButton && (
+              <button
+                onClick={handleThemeChange}
+                className={`w-full flex items-center p-3 rounded-lg ${
+                  theme === 'night'
+                    ? 'text-gray-300 hover:bg-gray-700'
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                <Palette className="w-5 h-5 mr-3" />
+                <span>Change Theme ({theme})</span>
+              </button>
+            )}
 
             <Link
               to="/feedback"
