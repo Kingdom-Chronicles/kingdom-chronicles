@@ -1,0 +1,26 @@
+{
+  "resourceName": "kingdomChroniclesDB",
+  "tableName": "KingdomChroniclesScores",
+  "partitionKey": {
+    "fieldName": "PK",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "SK",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "GSI1",
+      "partitionKey": {
+        "fieldName": "gameType",
+        "fieldType": "string"
+      },
+      "sortKey": {
+        "fieldName": "totalScore",
+        "fieldType": "number"
+      }
+    }
+  ],
+  "triggerFunctions": []
+}
