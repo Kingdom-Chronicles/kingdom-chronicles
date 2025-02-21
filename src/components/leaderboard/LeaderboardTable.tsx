@@ -34,68 +34,74 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({
   }
 
   return (
-    <div className="overflow-hidden">
-      <table className="min-w-full">
-        <thead>
-          <tr className={`border-b ${theme === 'night' ? 'border-gray-700' : 'border-gray-200'}`}>
-            <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-              theme === 'night' ? 'text-gray-300' : 'text-gray-500'
-            }`}>
-              Rank
-            </th>
-            <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-              theme === 'night' ? 'text-gray-300' : 'text-gray-500'
-            }`}>
-              Player
-            </th>
-            <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-              theme === 'night' ? 'text-gray-300' : 'text-gray-500'
-            }`}>
-              Total Score
-            </th>
-          </tr>
-        </thead>
-        <tbody className={`divide-y ${theme === 'night' ? 'divide-gray-700' : 'divide-gray-200'}`}>
-          {entries.map((entry) => (
-            <tr 
-              key={`${entry.username}-${entry.rank}`} 
-              className={`transition-colors ${
-                theme === 'night' ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
-              }`}
-            >
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center">
-                  {entry.rank <= 3 ? (
-                    <Trophy className={`w-5 h-5 ${
-                      entry.rank === 1 ? 'text-yellow-400' :
-                      entry.rank === 2 ? 'text-gray-400' :
-                      'text-amber-600'
-                    }`} />
-                  ) : (
-                    <span className={theme === 'night' ? 'text-gray-300' : 'text-gray-500'}>
-                      {entry.rank}
-                    </span>
-                  )}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className={`text-sm font-medium ${
-                  theme === 'night' ? 'text-white' : 'text-gray-900'
+    <div className="overflow-x-auto">
+      <div className="inline-block min-w-full align-middle">
+        <div className="overflow-hidden">
+          <table className="min-w-full">
+            <thead>
+              <tr className={`border-b ${theme === 'night' ? 'border-gray-700' : 'border-gray-200'}`}>
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  theme === 'night' ? 'text-gray-300' : 'text-gray-500'
+                } sticky left-0 ${theme === 'night' ? 'bg-gray-800' : 'bg-white'}`}>
+                  Rank
+                </th>
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  theme === 'night' ? 'text-gray-300' : 'text-gray-500'
                 }`}>
-                  {entry.username}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className={`text-sm ${
-                  theme === 'night' ? 'text-white' : 'text-gray-900'
+                  Player
+                </th>
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
+                  theme === 'night' ? 'text-gray-300' : 'text-gray-500'
                 }`}>
-                  {entry.totalScore.toLocaleString()}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  Total Score
+                </th>
+              </tr>
+            </thead>
+            <tbody className={`divide-y ${theme === 'night' ? 'divide-gray-700' : 'divide-gray-200'}`}>
+              {entries.map((entry) => (
+                <tr 
+                  key={`${entry.username}-${entry.rank}`} 
+                  className={`transition-colors ${
+                    theme === 'night' ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
+                  }`}
+                >
+                  <td className={`px-6 py-4 whitespace-nowrap sticky left-0 ${
+                    theme === 'night' ? 'bg-gray-800' : 'bg-white'
+                  }`}>
+                    <div className="flex items-center">
+                      {entry.rank <= 3 ? (
+                        <Trophy className={`w-5 h-5 ${
+                          entry.rank === 1 ? 'text-yellow-400' :
+                          entry.rank === 2 ? 'text-gray-400' :
+                          'text-amber-600'
+                        }`} />
+                      ) : (
+                        <span className={theme === 'night' ? 'text-gray-300' : 'text-gray-500'}>
+                          {entry.rank}
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className={`text-sm font-medium ${
+                      theme === 'night' ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {entry.username}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className={`text-sm ${
+                      theme === 'night' ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {entry.totalScore.toLocaleString()}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
