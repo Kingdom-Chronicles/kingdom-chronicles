@@ -16,6 +16,7 @@ import { authService } from './services/auth';
 import { useAuthStore } from './store/useAuthStore';
 import { initializeAnalytics } from './services/analytics/config';
 import { analyticsService } from './services/analytics/analyticsService';
+import { ThemeSelector } from './components/ui/ThemeSelector';
 
 // Analytics tracker component
 const AnalyticsTracker: React.FC = () => {
@@ -26,6 +27,14 @@ const AnalyticsTracker: React.FC = () => {
   }, [location]);
 
   return null;
+};
+
+// Theme button visibility controller
+const ThemeButtonController: React.FC = () => {
+  const location = useLocation();
+  const isVisible = location.pathname === '/' || location.pathname === '/games';
+  
+  return isVisible ? <ThemeSelector /> : null;
 };
 
 // Simplified NotFound component
@@ -76,6 +85,7 @@ const App: React.FC = () => {
           </Routes>
         </div>
         <MobileNav />
+        <ThemeButtonController />
       </div>
     </Router>
   );

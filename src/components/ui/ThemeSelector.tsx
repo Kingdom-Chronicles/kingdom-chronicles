@@ -31,7 +31,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 z-50 hidden md:block">
       <div className="bg-white rounded-lg shadow-lg p-2">
         <Button
           variant="outline"
