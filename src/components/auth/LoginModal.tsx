@@ -4,6 +4,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { Button } from '../ui/Button';
 import { SignUpModal } from './SignUpModal';
 import { useNavigate } from 'react-router-dom';
+import { authService } from '../../services/auth';
 
 interface LoginModalProps {
   isOpen: boolean;
