@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Book } from 'lucide-react';
+import { Settings, Book, BookOpen } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { TimeSelector } from '../../shared/components/TimeSelector';
 import { RoundSelector } from '../../shared/components/RoundSelector';
@@ -9,6 +9,7 @@ import { BibleVersionSelector } from './BibleVersionSelector';
 import { ScriptureReadingModal } from './ScriptureReadingModal';
 import { DEFAULT_SETTINGS } from '../../shared/constants/gameSettings';
 import type { GameSettings, PackType, DifficultyLevel, BibleVersion } from '../types';
+import { ManualModel } from '../../../components/manual/GameManual';
 
 interface GameSetupProps {
   onGameStart: (settings: GameSettings) => void;
@@ -22,6 +23,7 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
   const [maxAttempts, setMaxAttempts] = useState(3);
   const [bibleVersion, setBibleVersion] = useState<BibleVersion>('NKJV');
   const [isReadingModalOpen, setIsReadingModalOpen] = useState(false);
+  const [IsReadingManual, setIsReadingManual] = useState(false);
 
   const handleStartGame = () => {
     const settings: GameSettings = {
@@ -98,12 +100,25 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
           <Book className="w-4 h-4 mr-2" />
           Read Scriptures
         </Button>
+        <Button 
+          variant="outline" 
+          onClick={() => setIsReadingManual(true)}
+          className="w-full flex items-center justify-center"
+        >
+          <BookOpen className="w-4 h-4 mr-2" />
+          Game Instructions
+        </Button>
       </div>
 
       <ScriptureReadingModal
         isOpen={isReadingModalOpen}
         onClose={() => setIsReadingModalOpen(false)}
         selectedPack={packType}
+      />
+        <ManualModel
+        isOpen={IsReadingManual}
+        onClose={() => setIsReadingManual(false)}
+        gameType={'scripture-sprint'}
       />
     </div>
   );

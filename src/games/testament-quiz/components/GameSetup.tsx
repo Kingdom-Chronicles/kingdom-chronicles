@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Settings } from 'lucide-react';
+import { BookOpen, Settings } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { TimeSelector } from '../../shared/components/TimeSelector';
 import { RoundSelector } from '../../shared/components/RoundSelector';
 import { DEFAULT_SETTINGS } from '../../shared/constants/gameSettings';
 import type { GameSettings, GameMode } from '../types';
+import { ManualModel } from '../../../components/manual/GameManual';
 
 interface GameSetupProps {
   onGameStart: (settings: GameSettings) => void;
@@ -14,6 +15,7 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
   const [rounds, setRounds] = useState(DEFAULT_SETTINGS.rounds);
   const [timePerRound, setTimePerRound] = useState(DEFAULT_SETTINGS.timePerRound);
   const [gameMode, setGameMode] = useState<GameMode>('books');
+  const [IsReadingManual, setIsReadingManual] = useState(false);
 
   const handleStartGame = () => {
     const settings: GameSettings = {
@@ -60,9 +62,25 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
         <TimeSelector value={timePerRound} onChange={setTimePerRound} />
       </div>
 
-      <Button onClick={handleStartGame} className="w-full">
-        Start Game
-      </Button>
+      <div className="space-y-3">
+        <Button onClick={handleStartGame} className="w-full">
+          Start Game
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => setIsReadingManual(true)}
+          className="w-full flex items-center justify-center"
+        >
+          <BookOpen className="w-4 h-4 mr-2" />
+          Game Instructions
+        </Button>
+      </div>
+
+      <ManualModel
+        isOpen={IsReadingManual}
+        onClose={() => setIsReadingManual(false)}
+        gameType={'testament-quiz'}
+      />
     </div>
   );
 };
