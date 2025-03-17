@@ -115,7 +115,7 @@ export const ScrollingTestimonialCarousel: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Dots Navigation (Moved below the testimonials) */}
+      {/* Dots Navigation */}
       <div className="flex justify-center mt-4">
         {testimonials.map((_, index) => (
           <button
@@ -140,8 +140,8 @@ interface TestimonialCardProps {
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => (
   <div 
-    className="flex flex-col items-center p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md
-                transition-colors duration-200" 
+    className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md
+               dark:bg-gray-800 transition-colors duration-200" 
     style={{ width: '300px' }}
   >
     <img
@@ -149,7 +149,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => (
       alt={`${testimonial.name}'s avatar`}
       className="w-16 h-16 rounded-full mb-4 object-cover ring-2 ring-gray-200 dark:ring-gray-600"
     />
-    <p className="text-sm italic mb-4 text-gray-700 dark:text-gray-200">"{testimonial.feedback}"</p>
-    <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">- {testimonial.name}</p>
+    <p className="text-sm italic mb-4 text-gray-600 dark:text-gray-200">"{testimonial.feedback}"</p>
+    <p className="text-xs font-semibold text-gray-800 dark:text-gray-300">- {testimonial.name}</p>
   </div>
 );
