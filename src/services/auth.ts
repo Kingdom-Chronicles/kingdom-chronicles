@@ -60,6 +60,25 @@ class AuthService {
     return this.sanitizeUser(user);
   }
 
+  // Reset password functionality without requiring old password
+  async resetPassword(email: string, newPassword: string): Promise<User> {
+    const users = this.getUsers();
+    const user = Object.values(users).find(u => u.email === email);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Set the new password without checking the old one
+    user.password = newPassword;
+
+    // Save the updated users list
+    this.saveUsers(users);
+
+    // Return the sanitized user object without the password
+    return this.sanitizeUser(user);
+  }
+
   private sanitizeUser(user: User & { password?: string }): User {
     const { password, ...sanitizedUser } = user;
     return sanitizedUser;
