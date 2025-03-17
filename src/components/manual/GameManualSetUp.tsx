@@ -6,8 +6,9 @@ import {
   testamentquizmanual, 
   bibleCharadesmanual, 
   bibleversemanual,
-  bibleMemoryTutorials 
-} from './gamemanualmodels';
+  Kingdombuildersmanual,
+  ArkEscapemanual 
+} from './GameManuals';
 import { ManualModelProps } from './tutorials';
 
 export const ManualModel: React.FC<ManualModelProps> = ({ isOpen, onClose, gameType }) => {
@@ -18,7 +19,8 @@ export const ManualModel: React.FC<ManualModelProps> = ({ isOpen, onClose, gameT
     'testament-quiz': testamentquizmanual,
     'bible-charades': bibleCharadesmanual,
     'bible-verse': bibleversemanual,
-    'bible-memory': bibleMemoryTutorials
+    'kingdom-builders': Kingdombuildersmanual,
+    'ark-escape': ArkEscapemanual
   }[gameType];
 
   useEffect(() => {

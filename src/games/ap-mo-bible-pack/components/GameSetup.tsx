@@ -9,7 +9,7 @@ import { BibleVersionSelector } from './BibleVersionSelector';
 import { ScriptureReadingModal } from './ScriptureReadingModal';
 import { DEFAULT_SETTINGS } from '../../shared/constants/gameSettings';
 import type { GameSettings, PackType, DifficultyLevel, BibleVersion } from '../types';
-import { ManualModel } from '../../../components/manual/GameManual';
+import { ManualModel } from '../../../components/manual/GameManualSetUp';
 
 interface GameSetupProps {
   onGameStart: (settings: GameSettings) => void;

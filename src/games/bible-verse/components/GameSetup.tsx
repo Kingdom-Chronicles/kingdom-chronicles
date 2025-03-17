@@ -5,7 +5,7 @@ import { TimeSelector } from '../../shared/components/TimeSelector';
 import { RoundSelector } from '../../shared/components/RoundSelector';
 import { DEFAULT_SETTINGS } from '../../shared/constants/gameSettings';
 import type { GameSettings } from '../types';
-import { ManualModel } from '../../../components/manual/GameManual';
+import { ManualModel } from '../../../components/manual/GameManualSetUp';
 
 interface GameSetupProps {
   onGameStart: (settings: GameSettings) => void;

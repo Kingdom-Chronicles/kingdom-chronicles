@@ -185,8 +185,42 @@ export const bibleversemanual: Tutorial[] = [
 ];
 
 
-// Bible Memory Tutorials
-export const bibleMemoryTutorials: Tutorial[] = [
+// Kingdom Builder Tutorials
+export const Kingdombuildersmanual: Tutorial[] = [
+  {
+    title: 'Getting Started with the Game',
+    description: 'This tutorial will help you get started with the basics of the game.',
+    content: 'Follow the instructions to understand the basic game mechanics.',
+    icon: <Book className="w-6 h-6 text-indigo-600" />
+  },
+  {
+    title: 'Game Mode',
+    description: 'You can either choose to guess the testament by the Books or By the Stories.',
+    content: 'Master the techniques that will make you a pro in no time.',
+    icon: <Book className="w-6 h-6 text-indigo-600" />
+  },
+  {
+    title: 'Number of rounds',
+    description: 'Choose How many rounds you want.',
+    content: 'You can choose how many rounds you can go for.',
+    icon: <Book className="w-6 h-6 text-indigo-600" />
+  },
+  {
+    title: 'Time per Round',
+    description: 'Timed rounds!.',
+    content: 'You can choose how many rounds you can go for.',
+    icon: <Book className="w-6 h-6 text-indigo-600" />
+  },
+  {
+    title: 'Let us Begin',
+    description: 'Are you Excited?',
+    content: 'Let us Proceed.',
+    icon: <Book className="w-6 h-6 text-indigo-600" />
+  },
+];
+
+// Ark Escape Tutorials
+export const ArkEscapemanual: Tutorial[] = [
   {
     title: 'Getting Started with the Game',
     description: 'This tutorial will help you get started with the basics of the game.',

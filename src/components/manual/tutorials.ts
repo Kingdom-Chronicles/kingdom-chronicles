@@ -8,5 +8,5 @@ export interface Tutorial {
 export interface ManualModelProps {
   isOpen: boolean;
   onClose: () => void;
-  gameType: 'scripture-sprint' | 'testament-quiz' | 'bible-charades' | 'bible-verse'| 'bible-memory';
+  gameType: 'scripture-sprint' | 'testament-quiz' | 'bible-charades' | 'bible-verse'| 'kingdom-builders'| 'ark-escape';
 }

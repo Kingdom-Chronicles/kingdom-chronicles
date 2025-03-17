@@ -7,7 +7,7 @@ import { StoryModeSelector } from './StoryModeSelector';
 import { DifficultySelector } from './DifficultySelector';
 import { DEFAULT_SETTINGS } from '../../shared/constants/gameSettings';
 import type { Team, GameSettings, StoryGenerationMode, GameDifficulty } from '../types';
-import { ManualModel } from '../../../components/manual/GameManual';
+import { ManualModel } from '../../../components/manual/GameManualSetUp';
 
 interface GameSetupProps {
   onGameStart: (teams: Team[], settings: GameSettings) => void;
