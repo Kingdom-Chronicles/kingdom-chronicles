@@ -21,6 +21,12 @@
   --theme-primary: #1a202c;
   --theme-secondary: #4a5568;
   --theme-border: #e2e8f0;
+
+  /* Modal Colors */
+  --modal-bg: #ffffff;
+  --modal-bg-dark: #1f2937;
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+  --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 /* Night Theme */
@@ -39,6 +45,119 @@
   --theme-primary: #f7fafc;
   --theme-secondary: #cbd5e0;
   --theme-border: #4a5568;
+}
+
+/* Modal styles */
+.modal-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+  background-color: var(--modal-overlay);
+}
+
+.modal-content {
+  background-color: var(--modal-bg);
+  border-radius: 0.5rem;
+  box-shadow: var(--modal-shadow);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 28rem;
+  position: relative;
+}
+
+.theme-night .modal-content {
+  background-color: var(--modal-bg-dark);
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.modal-close-button:hover {
+  color: var(--text-primary);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+/* Form styles */
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  transition: all 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--input-focus-ring);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.theme-night .form-input {
+  background-color: var(--theme-card);
+  border-color: var(--theme-border);
+}
+
+.form-helper-text {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 0.25rem;
+}
+
+.form-error {
+  color: #ef4444;
+  font-size: 0.875rem;
+}
+
+.theme-night .form-error {
+  color: #f87171;
+}
+
+.form-link {
+  color: #4f46e5;
+  transition: color 0.2s;
+}
+
+.form-link:hover {
+  color: #4338ca;
+}
+
+.theme-night .form-link {
+  color: #818cf8;
+}
+
+.theme-night .form-link:hover {
+  color: #93c5fd;
+}
+
+.form-text {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
 }
 
 /* Night Theme Text Overrides */
@@ -169,22 +288,6 @@
   background-color: rgba(37, 99, 235, 0.2);
   border-color: #2563eb;
   color: #93c5fd;
-}
-
-/* Form Elements */
-.form-label {
-  color: var(--text-primary) !important;
-}
-
-.form-input {
-  color: var(--input-text) !important;
-  background-color: var(--input-bg) !important;
-  border-color: var(--input-border) !important;
-}
-
-.form-input:focus {
-  border-color: var(--input-focus-ring) !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25) !important;
 }
 
 /* Mobile Navigation and Header Styles */
