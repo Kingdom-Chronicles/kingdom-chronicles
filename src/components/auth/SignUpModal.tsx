@@ -34,78 +34,66 @@ export const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSuc
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md relative">
+    <div className="modal-container">
+      <div className="modal-content">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100"
+          className="modal-close-button"
         >
           <X className="w-6 h-6" />
         </button>
 
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Create Account</h2>
+        <h2 className="modal-title">Create Account</h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            <label className="form-label">
               Username
             </label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md 
-                       bg-white dark:bg-gray-700 
-                       text-gray-900 dark:text-gray-100 
-                       focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 
-                       focus:border-indigo-500 dark:focus:border-indigo-400"
+              className="form-input"
               required
               disabled={isLoading}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            <label className="form-label">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md 
-                       bg-white dark:bg-gray-700 
-                       text-gray-900 dark:text-gray-100 
-                       focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 
-                       focus:border-indigo-500 dark:focus:border-indigo-400"
+              className="form-input"
               required
               disabled={isLoading}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            <label className="form-label">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md 
-                       bg-white dark:bg-gray-700 
-                       text-gray-900 dark:text-gray-100 
-                       focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 
-                       focus:border-indigo-500 dark:focus:border-indigo-400"
+              className="form-input"
               required
               disabled={isLoading}
               minLength={8}
             />
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <p className="form-helper-text">
               Password must be at least 8 characters long
             </p>
           </div>
 
           {error && (
-            <p className="text-red-500 dark:text-red-400 text-sm">{error}</p>
+            <p className="form-error">{error}</p>
           )}
 
           <Button 
@@ -116,11 +104,11 @@ export const SignUpModal: React.FC<SignUpModalProps> = ({ isOpen, onClose, onSuc
             {isLoading ? 'Creating Account...' : 'Sign Up'}
           </Button>
 
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+          <p className="form-text">
             Already have an account?{' '}
             <button
               type="button"
-              className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
+              className="form-link"
               onClick={onClose}
               disabled={isLoading}
             >
