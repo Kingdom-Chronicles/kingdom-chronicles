@@ -3,6 +3,7 @@ import { Settings, Book } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { TimeSelector } from '../../shared/components/TimeSelector';
 import { RoundSelector } from '../../shared/components/RoundSelector';
+import { GameManualButton } from '../../../components/game-manual/GameManualButton';
 import { PackTypeSelector } from './PackTypeSelector';
 import { DifficultySelector } from './DifficultySelector';
 import { BibleVersionSelector } from './BibleVersionSelector';
@@ -98,6 +99,7 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
           <Book className="w-4 h-4 mr-2" />
           Read Scriptures
         </Button>
+        <GameManualButton gameId="scripture-sprint" />
       </div>
 
       <ScriptureReadingModal
