@@ -65,7 +65,7 @@ Features:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/masikotimo/kingdom-chronicles.git
+git clone https://github.com/Kingdom-Chronicles/kingdom-chronicles
 ```
 
 2. Install dependencies:

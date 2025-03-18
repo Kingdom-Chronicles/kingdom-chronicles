@@ -1,39 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useAnimationControls, useDragControls, PanInfo } from "framer-motion";
-
-interface Testimonial {
-  name: string;
-  feedback: string;
-  avatar: string;
-}
-
-const testimonials: Testimonial[] = [
-  {
-    name: "Denise Rwabwera",
-    feedback: "Kingdom Chronicles has deepened my understanding of the Bible in a fun and engaging way!",
-    avatar: "/denise.jpg"
-  },
-  {
-    name: "Joshua Kalange",
-    feedback: "I love playing the mini-games with my friends. It's such a unique and enjoyable experience!",
-    avatar: "/joshua.jpg"
-  },
-  {
-    name: "Akol Evangeline Johnson",
-    feedback: "The challenges are amazing, and the leaderboard keeps me motivated to keep playing!",
-    avatar: "/akol.jpg"
-  },
-  {
-    name: "Alvin Nuwahwera",
-    feedback: "Kingdom Chronicles pushed me out of my comfort zone! Need to read more! 📖✨",
-    avatar: "/alvin.jpg"
-  },
-  {
-    name: "Agatha Rachael Akullu",
-    feedback: "Kingdom Chronicles transformed my faith—challenged me to read more and grow spiritually! 🙏✨",
-    avatar: "/agatha.jpg"
-  }
-];
+import { motion, useAnimationControls, useDragControls } from "framer-motion";
+import { useTheme } from "../../hooks/useTheme";
+import { TestimonialCard } from "./TestimonialCard";
+import { testimonials } from "./constants/testimonials";
 
 const SCROLL_DURATION = 80;
 const CARD_WIDTH = 300;
@@ -45,6 +14,7 @@ export const ScrollingTestimonialCarousel: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const startAnimation = async () => {
@@ -65,7 +35,7 @@ export const ScrollingTestimonialCarousel: React.FC = () => {
     }
   }, [isHovered, controls]);
 
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: any) => {
     const moveThreshold = CARD_WIDTH / 4;
     if (Math.abs(info.offset.x) > moveThreshold) {
       const direction = info.offset.x > 0 ? -1 : 1;
@@ -110,12 +80,13 @@ export const ScrollingTestimonialCarousel: React.FC = () => {
             <TestimonialCard
               key={`${testimonial.name}-${index}`}
               testimonial={testimonial}
+              theme={theme}
             />
           ))}
         </motion.div>
       </div>
 
-      {/* Dots Navigation (Moved below the testimonials) */}
+      {/* Dots Navigation */}
       <div className="flex justify-center mt-4">
         {testimonials.map((_, index) => (
           <button
@@ -133,23 +104,3 @@ export const ScrollingTestimonialCarousel: React.FC = () => {
     </div>
   );
 };
-
-interface TestimonialCardProps {
-  testimonial: Testimonial;
-}
-
-const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => (
-  <div 
-    className="flex flex-col items-center p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md
-                transition-colors duration-200" 
-    style={{ width: '300px' }}
-  >
-    <img
-      src={testimonial.avatar}
-      alt={`${testimonial.name}'s avatar`}
-      className="w-16 h-16 rounded-full mb-4 object-cover ring-2 ring-gray-200 dark:ring-gray-600"
-    />
-    <p className="text-sm italic mb-4 text-gray-700 dark:text-gray-200">"{testimonial.feedback}"</p>
-    <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">- {testimonial.name}</p>
-  </div>
-);

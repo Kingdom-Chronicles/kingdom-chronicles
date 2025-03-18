@@ -3,7 +3,7 @@ import { Button } from "../components/ui/Button";
 import { FeatureCard } from "../components/features/FeatureCard";
 import { GameIcon, UsersIcon, TrophyIcon } from "../components/icons";
 import { useTheme } from "../hooks/useTheme";
-import { ScrollingTestimonialCarousel } from "../components/layout/ScrollingTestimonialCarousel";
+import { ScrollingTestimonialCarousel } from "../components/testimonials/ScrollingTestimonialCarousel";
 import { LoginModal } from "../components/auth/LoginModal";
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
