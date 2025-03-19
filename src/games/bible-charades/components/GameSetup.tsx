@@ -3,6 +3,7 @@ import { Settings } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { TimeSelector } from '../../shared/components/TimeSelector';
 import { RoundSelector } from '../../shared/components/RoundSelector';
+import { GameManualButton } from '../../../components/game-manual/GameManualButton';
 import { StoryModeSelector } from './StoryModeSelector';
 import { DifficultySelector } from './DifficultySelector';
 import { DEFAULT_SETTINGS } from '../../shared/constants/gameSettings';
@@ -79,9 +80,12 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
         <TimeSelector value={timePerRound} onChange={setTimePerRound} />
       </div>
 
-      <Button onClick={handleStartGame} className="w-full">
-        Start Game
-      </Button>
+      <div className="space-y-4">
+        <Button onClick={handleStartGame} className="w-full">
+          Start Game
+        </Button>
+        <GameManualButton gameId="bible-charades" />
+      </div>
     </div>
   );
 };
