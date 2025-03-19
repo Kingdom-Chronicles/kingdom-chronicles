@@ -20,8 +20,8 @@ export const GameManualModal: React.FC<GameManualModalProps> = ({ manual, isOpen
       title: 'How to Play',
       content: (
         <div className="space-y-4">
-          <p className="text-gray-600">{manual.description}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <p className="text-center text-gray-600">{manual.description}</p>
+          <ul className="text-left list-disc pl-5 space-y-2">
             {manual.howToPlay.map((step, index) => (
               <li key={index} className="text-gray-700">{step}</li>
             ))}
@@ -32,7 +32,7 @@ export const GameManualModal: React.FC<GameManualModalProps> = ({ manual, isOpen
     {
       title: 'Scoring System',
       content: (
-        <ul className="list-disc pl-5 space-y-2">
+        <ul className="text-left list-disc pl-5 space-y-2">
           {manual.scoring.map((rule, index) => (
             <li key={index} className="text-gray-700">{rule}</li>
           ))}
@@ -72,7 +72,7 @@ export const GameManualModal: React.FC<GameManualModalProps> = ({ manual, isOpen
           <X className="w-6 h-6" />
         </button>
 
-        <div className="p-6">
+        <div className="text-center p-6">
           <div className="flex items-center mb-6">
             <Icon className="w-8 h-8 text-indigo-600 mr-3" />
             <h2 className="text-2xl font-bold">{manual.title}</h2>
