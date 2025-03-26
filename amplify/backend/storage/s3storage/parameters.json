@@ -1,0 +1,21 @@
+{
+  "bucketName": "kingdom-chronicles-assets",
+  "authPolicyName": "s3_amplify_policy",
+  "unauthPolicyName": "s3_amplify_unauth_policy",
+  "authRoleName": {
+    "Ref": "AuthRoleName"
+  },
+  "unauthRoleName": {
+    "Ref": "UnauthRoleName"
+  },
+  "selectedGuestPermissions": [
+    "s3:GetObject"
+  ],
+  "selectedAuthenticatedPermissions": [
+    "s3:PutObject",
+    "s3:GetObject",
+    "s3:ListBucket",
+    "s3:DeleteObject"
+  ],
+  "triggerFunction": "NONE"
+}
