@@ -29,5 +29,15 @@ export interface Testimonial {
       name: "Agatha Rachael Akullu",
       feedback: "Kingdom Chronicles transformed my faith—challenged me to read more and grow spiritually! 🙏✨",
       avatar: "/testimonial-images/agatha.jpg"
+    },
+    {
+      name: "Marylyn Musiimenta ",
+      feedback: "Best app. As a Christian this is everything I prayed for ",
+      avatar: "/testimonial-images/marylyn.jpeg"
+    },
+    {
+      name: "Ivan Diaz ",
+      feedback: "Rating: ⭐⭐⭐⭐⭐ (5/5) Kingdom Chronicles has given me the joy of discovering new Bible verses and stories while keeping me engaged with thrilling gameplay.",
+      avatar: "/testimonial-images/ivan.jpeg"
     }
   ];
