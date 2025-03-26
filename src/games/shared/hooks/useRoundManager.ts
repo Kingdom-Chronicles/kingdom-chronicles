@@ -30,17 +30,18 @@ export const useRoundManager = () => {
   }, []);
 
   const endRound = useCallback((score: RoundScore) => {
-    if (endingRound.current) return;
+    if (endingRound.current || !settingsRef.current) return;
     endingRound.current = true;
 
     setRoundScores(prev => [...prev, score]);
     
-    if (settingsRef.current && currentRound < settingsRef.current.totalRounds) {
+    // Check if this was the last round
+    if (currentRound >= settingsRef.current.totalRounds) {
+      setIsPlaying(false);
+    } else {
       setCurrentRound(prev => prev + 1);
       setTimeLeft(settingsRef.current.timePerRound);
       endingRound.current = false;
-    } else {
-      setIsPlaying(false);
     }
   }, [currentRound]);
 
@@ -48,7 +49,6 @@ export const useRoundManager = () => {
     setTimeLeft(prev => {
       const newTime = Math.max(0, prev - 1);
       
-      // Play timer sound in last 10 seconds
       if (newTime <= 10 && newTime > 0) {
         timerSound.playTick();
       }

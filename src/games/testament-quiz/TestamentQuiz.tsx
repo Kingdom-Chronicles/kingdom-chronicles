@@ -40,14 +40,16 @@ export const TestamentQuiz: React.FC = () => {
   const { handleScoreUpdate } = useGameScore('testament-quiz');
 
   const handleRoundEnd = useCallback(() => {
+    if (!settings) return;
+    
     const score = calculateScore(timeLeft);
-    const duration = settings?.timePerRound ? settings.timePerRound - timeLeft : 0;
+    const duration = settings.timePerRound - timeLeft;
     analyticsService.trackGameEnd('testament-quiz', score.points, duration);
     
     handleScoreUpdate(score.points);
     endRound(score);
     resetGame();
-  }, [calculateScore, handleScoreUpdate, endRound, resetGame, settings?.timePerRound, timeLeft]);
+  }, [calculateScore, handleScoreUpdate, endRound, resetGame, settings, timeLeft]);
 
   useEffect(() => {
     if (!isPlaying || timeLeft <= 0) return;
@@ -67,21 +69,42 @@ export const TestamentQuiz: React.FC = () => {
     startGame(gameSettings);
   }, [resetGame, startGame]);
 
-  const handleCorrectGuess = useCallback(() => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-  }, []);
-
-  const handleTestamentSelect = (testament: Testament) => {
+  const handleTestamentSelect = useCallback((testament: Testament) => {
+    if (!isPlaying || timeLeft <= 0) return;
+    
     const isCorrect = testament === currentItem?.testament;
     if (isCorrect) {
-      handleCorrectGuess();
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
     }
     makeGuess(testament);
-  };
+  }, [isPlaying, timeLeft, currentItem, makeGuess]);
+
+  // Show game over screen if we've completed all rounds
+  if (!isPlaying && settings && roundScores.length >= settings.totalRounds) {
+    return (
+      <div className="theme-base theme-testament-quiz min-h-screen">
+        <MobileGameHeader title="Testament Quiz" />
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="content-container">
+            <GameOver 
+              scores={roundScores}
+              onPlayAgain={() => {
+                resetGame();
+                if (settings) {
+                  handleGameStart(settings);
+                }
+              }}
+              onExit={() => window.location.href = '/games'}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="theme-base theme-testament-quiz min-h-screen">
@@ -89,24 +112,13 @@ export const TestamentQuiz: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="content-container">
           {!isPlaying || !settings ? (
-            roundScores.length > 0 ? (
-              <GameOver 
-                scores={roundScores}
-                onPlayAgain={() => {
-                  resetGame();
-                  handleGameStart(settings!);
-                }}
-                onExit={() => window.location.href = '/games'}
-              />
-            ) : (
-              <div className="max-w-4xl mx-auto p-4">
-                <div className="text-center mb-8">
-                  <h1 className="text-3xl font-bold mb-2">Guess the Testament</h1>
-                  <p className="text-gray-600">Test your knowledge of Bible books and stories!</p>
-                </div>
-                <GameSetup onGameStart={handleGameStart} />
+            <div className="max-w-4xl mx-auto p-4">
+              <div className="text-center mb-8">
+                <h1 className="text-3xl font-bold mb-2">Guess the Testament</h1>
+                <p className="text-gray-600">Test your knowledge of Bible books and stories!</p>
               </div>
-            )
+              <GameSetup onGameStart={handleGameStart} />
+            </div>
           ) : (
             <>
               <div className="text-center mb-8">
@@ -139,3 +151,5 @@ export const TestamentQuiz: React.FC = () => {
     </div>
   );
 };
+
+export default TestamentQuiz;
