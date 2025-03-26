@@ -16,6 +16,8 @@ export const useGameState = (gameMode: GameMode = 'books') => {
   
   // Track used items to prevent repetition
   const usedItemsRef = useRef<Set<string>>(new Set());
+  // Track if we're in the process of transitioning to next question
+  const transitioningRef = useRef(false);
 
   const getNextItem = useCallback(() => {
     const items = gameMode === 'books' ? BIBLE_BOOKS : BIBLE_STORIES;
@@ -30,24 +32,29 @@ export const useGameState = (gameMode: GameMode = 'books') => {
     if (availableItems.length === 0) {
       usedItemsRef.current.clear();
       const nextItem = items[Math.floor(Math.random() * items.length)];
-      setCurrentItem(nextItem);
       const itemId = gameMode === 'books' ? nextItem.name : nextItem.id;
       usedItemsRef.current.add(itemId);
+      setCurrentItem(nextItem);
+      setLastGuessCorrect(null); // Clear feedback when resetting questions
+      transitioningRef.current = false;
       return;
     }
 
     // Select random item from remaining available items
     const nextItem = availableItems[Math.floor(Math.random() * availableItems.length)];
-    setCurrentItem(nextItem);
-    
-    // Add to used items set
     const itemId = gameMode === 'books' ? nextItem.name : nextItem.id;
     usedItemsRef.current.add(itemId);
     
-    setLastGuessCorrect(null);
+    setCurrentItem(nextItem);
+    setLastGuessCorrect(null); // Clear feedback for new question
+    transitioningRef.current = false;
   }, [gameMode]);
 
   const makeGuess = useCallback((testament: Testament) => {
+    // Prevent multiple guesses during transition
+    if (transitioningRef.current) return;
+    transitioningRef.current = true;
+
     const isCorrect = testament === currentItem.testament;
     
     setQuestionHistory(prev => [...prev, {
@@ -66,8 +73,10 @@ export const useGameState = (gameMode: GameMode = 'books') => {
       setLastGuessCorrect(false);
     }
     
-    // Use setTimeout to prevent state updates during render
-    setTimeout(getNextItem, 1000);
+    // Delay getting next question to show feedback
+    setTimeout(() => {
+      getNextItem();
+    }, 1000);
   }, [currentItem, gameMode, getNextItem]);
 
   const calculateScore = useCallback((timeLeft: number): RoundScore => {
@@ -86,14 +95,18 @@ export const useGameState = (gameMode: GameMode = 'books') => {
   const resetGame = useCallback(() => {
     const items = gameMode === 'books' ? BIBLE_BOOKS : BIBLE_STORIES;
     const randomItem = items[Math.floor(Math.random() * items.length)];
+    
     setCurrentItem(randomItem);
     setCorrectAnswers(0);
     setWrongAnswers(0);
     setLastGuessCorrect(null);
     setQuestionHistory([]);
+    
     usedItemsRef.current.clear();
     const itemId = gameMode === 'books' ? randomItem.name : randomItem.id;
     usedItemsRef.current.add(itemId);
+    
+    transitioningRef.current = false;
   }, [gameMode]);
 
   return {
