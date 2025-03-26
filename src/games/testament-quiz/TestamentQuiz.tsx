@@ -84,16 +84,25 @@ export const TestamentQuiz: React.FC = () => {
   }, [isPlaying, timeLeft, currentItem, makeGuess]);
 
   // Show game over screen if we've completed all rounds
-  if (settings && currentRound > settings.totalRounds) {
+  if (!isPlaying && settings && roundScores.length >= settings.totalRounds) {
     return (
-      <GameOver 
-        scores={roundScores}
-        onPlayAgain={() => {
-          resetGame();
-          handleGameStart(settings);
-        }}
-        onExit={() => window.location.href = '/games'}
-      />
+      <div className="theme-base theme-testament-quiz min-h-screen">
+        <MobileGameHeader title="Testament Quiz" />
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="content-container">
+            <GameOver 
+              scores={roundScores}
+              onPlayAgain={() => {
+                resetGame();
+                if (settings) {
+                  handleGameStart(settings);
+                }
+              }}
+              onExit={() => window.location.href = '/games'}
+            />
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -142,3 +151,5 @@ export const TestamentQuiz: React.FC = () => {
     </div>
   );
 };
+
+export default TestamentQuiz;

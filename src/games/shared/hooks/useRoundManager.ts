@@ -19,7 +19,6 @@ export const useRoundManager = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const settingsRef = useRef<GameSettings | null>(null);
   const endingRound = useRef(false);
-  const roundCompleted = useRef(false);
 
   const startGame = useCallback((gameSettings: GameSettings) => {
     settingsRef.current = gameSettings;
@@ -28,7 +27,6 @@ export const useRoundManager = () => {
     setIsPlaying(true);
     setRoundScores([]);
     endingRound.current = false;
-    roundCompleted.current = false;
   }, []);
 
   const endRound = useCallback((score: RoundScore) => {
@@ -37,20 +35,17 @@ export const useRoundManager = () => {
 
     setRoundScores(prev => [...prev, score]);
     
-    if (currentRound < settingsRef.current.totalRounds) {
+    // Check if this was the last round
+    if (currentRound >= settingsRef.current.totalRounds) {
+      setIsPlaying(false);
+    } else {
       setCurrentRound(prev => prev + 1);
       setTimeLeft(settingsRef.current.timePerRound);
       endingRound.current = false;
-      roundCompleted.current = false;
-    } else {
-      setIsPlaying(false);
-      roundCompleted.current = true;
     }
   }, [currentRound]);
 
   const decrementTime = useCallback(() => {
-    if (roundCompleted.current) return;
-    
     setTimeLeft(prev => {
       const newTime = Math.max(0, prev - 1);
       
@@ -66,10 +61,6 @@ export const useRoundManager = () => {
     return roundScores.reduce((total, round) => total + round.points, 0);
   }, [roundScores]);
 
-  const isGameComplete = useCallback(() => {
-    return settingsRef.current && currentRound > settingsRef.current.totalRounds;
-  }, [currentRound]);
-
   return {
     currentRound,
     timeLeft,
@@ -79,7 +70,6 @@ export const useRoundManager = () => {
     startGame,
     endRound,
     decrementTime,
-    getTotalScore,
-    isGameComplete
+    getTotalScore
   };
 };
