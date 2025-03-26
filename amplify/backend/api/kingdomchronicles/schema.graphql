@@ -1,0 +1,68 @@
+type Query {
+  echo(msg: String): String
+}
+
+type User @model @auth(rules: [
+  { allow: owner },
+  { allow: public, provider: apiKey, operations: [read] }
+]) {
+  id: ID!
+  username: String!
+  email: String!
+  points: Int!
+  achievements: [Achievement] @hasMany
+  teams: [TeamMember] @hasMany
+}
+
+type Achievement @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  title: String!
+  description: String!
+  unlockedAt: AWSDateTime
+  user: User @belongsTo
+}
+
+type Team @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  name: String!
+  score: Int!
+  members: [TeamMember] @hasMany
+  games: [GameSession] @hasMany
+  scores: [Score] @hasMany
+}
+
+type TeamMember @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  user: User @belongsTo
+  team: Team @belongsTo
+  role: String!
+}
+
+type GameSession @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  gameType: String!
+  startTime: AWSDateTime!
+  endTime: AWSDateTime
+  teams: [Team] @hasMany
+  scores: [Score] @hasMany
+  status: String!
+}
+
+type Score @model @auth(rules: [
+  { allow: owner },
+  { allow: public, provider: apiKey, operations: [read] }
+]) {
+  id: ID!
+  userId: ID!
+  points: Int!
+  gameType: String!
+  timestamp: AWSDateTime!
+}
+
+type GameAsset @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  type: String!
+  url: String!
+  gameType: String!
+  metadata: AWSJSON
+}
