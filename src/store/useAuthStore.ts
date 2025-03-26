@@ -13,7 +13,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
       guestScore: 0,
@@ -22,19 +22,17 @@ export const useAuthStore = create<AuthState>()(
       updateScore: (points) => {
         if (points === 0) return;
         
-        set((state) => {
-          if (state.isAuthenticated && state.user) {
-            return {
+        const state = get();
+        const newState = state.isAuthenticated && state.user
+          ? {
               user: {
                 ...state.user,
-                points: state.user.points + points
+                points: (state.user.points || 0) + points
               }
-            };
-          }
-          return {
-            guestScore: state.guestScore + points
-          };
-        });
+            }
+          : { guestScore: state.guestScore + points };
+        
+        set(newState);
       },
     }),
     {

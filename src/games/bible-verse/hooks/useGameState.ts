@@ -2,22 +2,12 @@ import { useState, useCallback, useEffect } from 'react';
 import { BIBLE_VERSES } from '../constants/verses';
 import type { BibleVerse, RoundScore, VerseAttempt } from '../types';
 
-// Fisher-Yates shuffle algorithm
-const shuffleArray = <T,>(array: T[]): T[] => {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
-};
-
 export const useGameState = () => {
   const [currentVerse, setCurrentVerse] = useState<BibleVerse>(() => {
     const verse = BIBLE_VERSES[Math.floor(Math.random() * BIBLE_VERSES.length)];
     return {
       ...verse,
-      options: shuffleArray(verse.options)
+      options: [...verse.options].sort(() => Math.random() - 0.5)
     };
   });
   const [selectedVerse, setSelectedVerse] = useState<string | null>(null);
@@ -29,11 +19,11 @@ export const useGameState = () => {
     const remainingVerses = BIBLE_VERSES.filter((_, index) => index !== currentIndex);
     const nextVerse = remainingVerses[Math.floor(Math.random() * remainingVerses.length)];
     
-    // Shuffle the options for the new verse
     setCurrentVerse({
       ...nextVerse,
-      options: shuffleArray(nextVerse.options)
+      options: [...nextVerse.options].sort(() => Math.random() - 0.5)
     });
+    setSelectedVerse(null);
   }, [currentVerse]);
 
   useEffect(() => {
@@ -51,10 +41,8 @@ export const useGameState = () => {
         setVersesFound(prev => prev + 1);
       }
 
-      setTimeout(() => {
-        getNextVerse();
-        setSelectedVerse(null);
-      }, 1500);
+      // Use setTimeout to prevent state updates during render
+      setTimeout(getNextVerse, 1500);
     }
   }, [selectedVerse, currentVerse, getNextVerse]);
 
@@ -74,7 +62,7 @@ export const useGameState = () => {
     const randomVerse = BIBLE_VERSES[Math.floor(Math.random() * BIBLE_VERSES.length)];
     setCurrentVerse({
       ...randomVerse,
-      options: shuffleArray(randomVerse.options)
+      options: [...randomVerse.options].sort(() => Math.random() - 0.5)
     });
     setSelectedVerse(null);
     setVersesFound(0);

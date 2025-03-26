@@ -1,8 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { BIBLE_BOOKS } from '../constants/books';
 import { BIBLE_STORIES } from '../constants/stories';
 import type { BibleBook, Testament, RoundScore, QuestionHistory, GameMode } from '../types';
-import { timerSound } from '../../../services/audio/timerSound';
 
 export const useGameState = (gameMode: GameMode = 'books') => {
   const [currentItem, setCurrentItem] = useState<BibleBook | any>(() => 
@@ -14,18 +13,39 @@ export const useGameState = (gameMode: GameMode = 'books') => {
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const [lastGuessCorrect, setLastGuessCorrect] = useState<boolean | null>(null);
   const [questionHistory, setQuestionHistory] = useState<QuestionHistory[]>([]);
+  
+  // Track used items to prevent repetition
+  const usedItemsRef = useRef<Set<string>>(new Set());
 
   const getNextItem = useCallback(() => {
     const items = gameMode === 'books' ? BIBLE_BOOKS : BIBLE_STORIES;
-    const currentIndex = items.findIndex(item => 
-      gameMode === 'books' 
-        ? item.name === (currentItem as BibleBook).name
-        : item.title === currentItem.title
-    );
-    const remainingItems = items.filter((_, index) => index !== currentIndex);
-    const nextItem = remainingItems[Math.floor(Math.random() * remainingItems.length)];
+    
+    // Filter out already used items
+    const availableItems = items.filter(item => {
+      const itemId = gameMode === 'books' ? item.name : item.id;
+      return !usedItemsRef.current.has(itemId);
+    });
+
+    // If all items have been used, reset the used items set
+    if (availableItems.length === 0) {
+      usedItemsRef.current.clear();
+      const nextItem = items[Math.floor(Math.random() * items.length)];
+      setCurrentItem(nextItem);
+      const itemId = gameMode === 'books' ? nextItem.name : nextItem.id;
+      usedItemsRef.current.add(itemId);
+      return;
+    }
+
+    // Select random item from remaining available items
+    const nextItem = availableItems[Math.floor(Math.random() * availableItems.length)];
     setCurrentItem(nextItem);
-  }, [currentItem, gameMode]);
+    
+    // Add to used items set
+    const itemId = gameMode === 'books' ? nextItem.name : nextItem.id;
+    usedItemsRef.current.add(itemId);
+    
+    setLastGuessCorrect(null);
+  }, [gameMode]);
 
   const makeGuess = useCallback((testament: Testament) => {
     const isCorrect = testament === currentItem.testament;
@@ -46,10 +66,8 @@ export const useGameState = (gameMode: GameMode = 'books') => {
       setLastGuessCorrect(false);
     }
     
-    setTimeout(() => {
-      getNextItem();
-      setLastGuessCorrect(null);
-    }, 1000);
+    // Use setTimeout to prevent state updates during render
+    setTimeout(getNextItem, 1000);
   }, [currentItem, gameMode, getNextItem]);
 
   const calculateScore = useCallback((timeLeft: number): RoundScore => {
@@ -67,11 +85,15 @@ export const useGameState = (gameMode: GameMode = 'books') => {
 
   const resetGame = useCallback(() => {
     const items = gameMode === 'books' ? BIBLE_BOOKS : BIBLE_STORIES;
-    setCurrentItem(items[Math.floor(Math.random() * items.length)]);
+    const randomItem = items[Math.floor(Math.random() * items.length)];
+    setCurrentItem(randomItem);
     setCorrectAnswers(0);
     setWrongAnswers(0);
     setLastGuessCorrect(null);
     setQuestionHistory([]);
+    usedItemsRef.current.clear();
+    const itemId = gameMode === 'books' ? randomItem.name : randomItem.id;
+    usedItemsRef.current.add(itemId);
   }, [gameMode]);
 
   return {
@@ -81,6 +103,7 @@ export const useGameState = (gameMode: GameMode = 'books') => {
     resetGame,
     correctAnswers,
     wrongAnswers,
-    lastGuessCorrect
+    lastGuessCorrect,
+    gameMode
   };
 };
