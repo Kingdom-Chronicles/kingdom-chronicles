@@ -48,6 +48,13 @@ class AuthService {
     return this.sanitizeUser(newUser);
   }
 
+  async deleteAccount(userId: string): Promise<void> {
+    const users = this.getUsers();
+    delete users[userId];
+    this.saveUsers(users);
+    this.storage.removeItem(this.CURRENT_USER_KEY);
+  }
+
   async signOut(): Promise<void> {
     this.storage.removeItem(this.CURRENT_USER_KEY);
   }
