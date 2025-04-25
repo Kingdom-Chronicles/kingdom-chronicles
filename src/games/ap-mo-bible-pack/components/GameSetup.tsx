@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Settings, Book } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
-import { TimeSelector } from '../../shared/components/TimeSelector';
 import { RoundSelector } from '../../shared/components/RoundSelector';
+import { GameMasterToggle } from '../../../components/game/GameMasterToggle';
 import { GameManualButton } from '../../../components/game-manual/GameManualButton';
 import { PackTypeSelector } from './PackTypeSelector';
 import { DifficultySelector } from './DifficultySelector';
@@ -23,6 +23,7 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
   const [maxAttempts, setMaxAttempts] = useState(3);
   const [bibleVersion, setBibleVersion] = useState<BibleVersion>('NKJV');
   const [isReadingModalOpen, setIsReadingModalOpen] = useState(false);
+  const [isGameMaster, setIsGameMaster] = useState(false);
 
   const handleStartGame = () => {
     const settings: GameSettings = {
@@ -32,6 +33,7 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
       difficulty,
       maxAttempts,
       bibleVersion,
+      isGameMaster,
       points: {
         correct: 100,
         timeBonus: 0.5
@@ -84,6 +86,10 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
               <option key={num} value={num}>{num} {num === 1 ? 'Attempt' : 'Attempts'}</option>
             ))}
           </select>
+        </div>
+
+        <div className="flex justify-center">
+          <GameMasterToggle isGameMaster={isGameMaster} onToggle={setIsGameMaster} />
         </div>
       </div>
 

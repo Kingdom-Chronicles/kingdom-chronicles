@@ -138,6 +138,7 @@ export const BibleVerse: React.FC = () => {
                   selectedVerse={selectedVerse}
                   targetVerse={currentVerse}
                   disabled={timeLeft === 0}
+                  isGameMaster={settings.isGameMaster}
                 />
               </div>
             </>

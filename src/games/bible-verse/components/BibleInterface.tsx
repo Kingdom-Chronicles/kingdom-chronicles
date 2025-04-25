@@ -6,16 +6,26 @@ interface BibleInterfaceProps {
   selectedVerse: string | null;
   targetVerse: BibleVerse;
   disabled?: boolean;
+  isGameMaster?: boolean;
 }
 
 export const BibleInterface: React.FC<BibleInterfaceProps> = ({
   onVerseSelect,
   selectedVerse,
   targetVerse,
-  disabled
+  disabled,
+  isGameMaster
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
+      {isGameMaster && (
+        <div className="mb-4 p-4 rounded-lg bg-amber-50 border border-amber-200">
+          <p className="text-amber-800 font-medium">
+            Correct Answer: {targetVerse.reference}
+          </p>
+        </div>
+      )}
+
       <div className="grid gap-4">
         {targetVerse.options.map((option) => (
           <button
@@ -31,6 +41,7 @@ export const BibleInterface: React.FC<BibleInterfaceProps> = ({
                   : 'border-red-500 bg-red-50'
                 : 'border-gray-200'
               }
+              ${isGameMaster && option === targetVerse.reference ? 'ring-2 ring-amber-500' : ''}
             `}
           >
             <div className="flex items-center">

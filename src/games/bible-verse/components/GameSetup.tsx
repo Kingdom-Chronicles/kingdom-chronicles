@@ -3,6 +3,7 @@ import { Settings } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { TimeSelector } from '../../shared/components/TimeSelector';
 import { RoundSelector } from '../../shared/components/RoundSelector';
+import { GameMasterToggle } from '../../../components/game/GameMasterToggle';
 import { GameManualButton } from '../../../components/game-manual/GameManualButton';
 import { DEFAULT_SETTINGS } from '../../shared/constants/gameSettings';
 import type { GameSettings } from '../types';
@@ -14,11 +15,13 @@ interface GameSetupProps {
 export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
   const [rounds, setRounds] = useState(DEFAULT_SETTINGS.rounds);
   const [timePerRound, setTimePerRound] = useState(DEFAULT_SETTINGS.timePerRound);
+  const [isGameMaster, setIsGameMaster] = useState(false);
 
   const handleStartGame = () => {
     const settings: GameSettings = {
       totalRounds: rounds,
       timePerRound,
+      isGameMaster,
       points: {
         correct: 100,
         timeBonus: 0.5
@@ -38,6 +41,9 @@ export const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
       <div className="space-y-4 mb-6">
         <RoundSelector value={rounds} onChange={setRounds} />
         <TimeSelector value={timePerRound} onChange={setTimePerRound} />
+        <div className="flex justify-center">
+          <GameMasterToggle isGameMaster={isGameMaster} onToggle={setIsGameMaster} />
+        </div>
       </div>
 
       <div className="space-y-4">

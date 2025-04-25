@@ -142,6 +142,8 @@ export const TestamentQuiz: React.FC = () => {
                   onSelect={handleTestamentSelect}
                   lastGuessCorrect={lastGuessCorrect}
                   disabled={timeLeft === 0}
+                  isGameMaster={settings.isGameMaster}
+                  correctTestament={currentItem?.testament}
                 />
               </div>
             </>

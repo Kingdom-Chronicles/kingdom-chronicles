@@ -166,6 +166,8 @@ export const ScriptureSprint: React.FC = () => {
                   attemptsLeft={feedback?.attemptsLeft}
                   value={inputValue}
                   onChange={setInputValue}
+                  isGameMaster={settings.isGameMaster}
+                  correctAnswer={currentVerse ? getVerseText(currentVerse) : undefined}
                 />
               </div>
             </>

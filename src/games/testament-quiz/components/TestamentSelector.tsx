@@ -6,12 +6,16 @@ interface TestamentSelectorProps {
   onSelect: (testament: Testament) => void;
   lastGuessCorrect: boolean | null;
   disabled?: boolean;
+  isGameMaster?: boolean;
+  correctTestament?: Testament;
 }
 
 export const TestamentSelector: React.FC<TestamentSelectorProps> = ({ 
   onSelect, 
   lastGuessCorrect,
-  disabled 
+  disabled,
+  isGameMaster,
+  correctTestament
 }) => {
   return (
     <div className="space-y-4">
@@ -22,6 +26,14 @@ export const TestamentSelector: React.FC<TestamentSelectorProps> = ({
           {lastGuessCorrect ? 'Correct!' : 'Wrong! -50 points'}
         </div>
       )}
+
+      {isGameMaster && correctTestament && (
+        <div className="text-center p-4 rounded-lg mb-4 bg-amber-50 border border-amber-200">
+          <p className="text-amber-800 font-medium">
+            Correct Answer: {correctTestament === 'old' ? 'Old Testament' : 'New Testament'}
+          </p>
+        </div>
+      )}
       
       <div className="grid grid-cols-2 gap-4">
         <button
@@ -30,6 +42,7 @@ export const TestamentSelector: React.FC<TestamentSelectorProps> = ({
           className={`
             flex flex-col items-center p-6 rounded-lg border-2 transition-colors
             ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+            ${isGameMaster && correctTestament === 'old' ? 'ring-2 ring-amber-500' : ''}
             bg-amber-50 border-amber-500 hover:bg-amber-100
             disabled:bg-gray-100 disabled:border-gray-200
           `}
@@ -44,6 +57,7 @@ export const TestamentSelector: React.FC<TestamentSelectorProps> = ({
           className={`
             flex flex-col items-center p-6 rounded-lg border-2 transition-colors
             ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+            ${isGameMaster && correctTestament === 'new' ? 'ring-2 ring-amber-500' : ''}
             bg-indigo-50 border-indigo-500 hover:bg-indigo-100
             disabled:bg-gray-100 disabled:border-gray-200
           `}

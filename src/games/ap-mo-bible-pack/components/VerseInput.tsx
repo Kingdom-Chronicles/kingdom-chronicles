@@ -8,6 +8,8 @@ interface VerseInputProps {
   attemptsLeft?: number;
   value: string;
   onChange: (value: string) => void;
+  isGameMaster?: boolean;
+  correctAnswer?: string;
 }
 
 export const VerseInput: React.FC<VerseInputProps> = ({ 
@@ -15,7 +17,9 @@ export const VerseInput: React.FC<VerseInputProps> = ({
   disabled,
   attemptsLeft,
   value,
-  onChange
+  onChange,
+  isGameMaster,
+  correctAnswer
 }) => {
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
@@ -78,6 +82,14 @@ export const VerseInput: React.FC<VerseInputProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {isGameMaster && correctAnswer && (
+        <div className="p-4 rounded-lg bg-amber-50 border border-amber-200">
+          <p className="text-amber-800 font-medium">
+            Correct Answer: {correctAnswer}
+          </p>
+        </div>
+      )}
+
       <div className="space-y-2">
         <textarea
           value={value}

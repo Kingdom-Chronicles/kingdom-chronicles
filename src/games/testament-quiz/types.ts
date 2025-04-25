@@ -19,6 +19,7 @@ export interface GameSettings {
   totalRounds: number;
   timePerRound: number;
   gameMode: GameMode;
+  isGameMaster: boolean;
   points: {
     correct: number;
     timeBonus: number;
