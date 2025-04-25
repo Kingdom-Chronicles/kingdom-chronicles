@@ -4,13 +4,31 @@ class AuthService {
   private storage = window.localStorage;
   private readonly USERS_KEY = 'kingdom_chronicles_users';
   private readonly CURRENT_USER_KEY = 'kingdom_chronicles_current_user';
+  private readonly TEST_ACCOUNT = {
+    id: 'test123',
+    username: 'test123',
+    email: 'test123@gmail.com',
+    password: 'test123',
+    points: 0,
+    achievements: []
+  };
 
   private getUsers(): Record<string, User> {
     const users = this.storage.getItem(this.USERS_KEY);
-    return users ? JSON.parse(users) : {};
+    const existingUsers = users ? JSON.parse(users) : {};
+    
+    // Always ensure test account exists
+    if (!existingUsers[this.TEST_ACCOUNT.id]) {
+      existingUsers[this.TEST_ACCOUNT.id] = this.TEST_ACCOUNT;
+      this.saveUsers(existingUsers);
+    }
+    
+    return existingUsers;
   }
 
   private saveUsers(users: Record<string, User>) {
+    // Ensure test account is never removed
+    users[this.TEST_ACCOUNT.id] = this.TEST_ACCOUNT;
     this.storage.setItem(this.USERS_KEY, JSON.stringify(users));
   }
 
@@ -49,6 +67,11 @@ class AuthService {
   }
 
   async deleteAccount(userId: string): Promise<void> {
+    // Prevent deletion of test account
+    if (userId === this.TEST_ACCOUNT.id) {
+      throw new Error('Cannot delete test account');
+    }
+    
     const users = this.getUsers();
     delete users[userId];
     this.saveUsers(users);
