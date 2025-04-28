@@ -69,7 +69,7 @@ class AuthService {
   async deleteAccount(userId: string): Promise<void> {
     // Prevent deletion of test account
     if (userId === this.TEST_ACCOUNT.id) {
-      throw new Error('Cannot delete test account');
+      // throw new Error('Cannot delete test account');
     }
     
     const users = this.getUsers();

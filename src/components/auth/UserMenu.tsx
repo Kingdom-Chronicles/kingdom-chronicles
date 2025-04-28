@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { User, LogOut } from 'lucide-react';
+import { User, LogOut, UserX } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { authService } from '../../services/auth';
 import { Button } from '../ui/Button';
 import { LoginModal } from './LoginModal';
+import { DeleteProfileModal } from './DeleteProfileModal';
 
 export const UserMenu: React.FC = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { user, isAuthenticated, guestScore, logout } = useAuthStore();
 
   const handleLogout = async () => {
@@ -30,15 +32,26 @@ export const UserMenu: React.FC = () => {
                 <span className="font-semibold text-indigo-600">{user?.points}</span>
               </div>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleLogout}
-              className="flex items-center"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsDeleteModalOpen(true)}
+                className="flex items-center text-red-600 hover:text-red-700 hover:bg-red-50"
+              >
+                <UserX className="w-4 h-4 mr-2" />
+                Delete Profile
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+                className="flex items-center"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="flex items-center space-x-4">
@@ -64,6 +77,11 @@ export const UserMenu: React.FC = () => {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
+      />
+
+      <DeleteProfileModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
       />
     </>
   );
