@@ -1,0 +1,107 @@
+amplify add storage
+
+   ? Select from one of the below mentioned services:
+   ❯ NoSQL Database
+
+   ? Provide a friendly name for your resource:
+   ❯ kingdomChroniclesScores
+
+   ? Provide table name:
+   ❯ KingdomChroniclesScores
+   ? What would you like to name this column:
+   ❯ PK
+   ? Choose the data type:
+   ❯ string
+
+   ? Would you like to add another column? (Y/n)
+   ❯ Y
+   ? What would you like to name this column:
+   ❯ SK
+   ? Choose the data type:
+   ❯ string
+
+   ? Would you like to add another column? (Y/n)
+   ❯ Y
+
+   ? What would you like to name this column:
+   ❯ userId
+   ? Choose the data type:
+   ❯ string
+
+   ? Would you like to add another column? (Y/n)
+   ❯ Y
+
+   ? What would you like to name this column:
+   ❯ username
+   ? Choose the data type:
+   ❯ string
+
+   ? Would you like to add another column? (Y/n)
+   ❯ Y
+
+   ? What would you like to name this column:
+   ❯ gameType
+   ? Choose the data type:
+   ❯ string
+
+   ? Would you like to add another column? (Y/n)
+   ❯ Y
+
+   ? What would you like to name this column:
+   ❯ score
+   ? Choose the data type:
+   ❯ number
+
+   ? Would you like to add another column? (Y/n)
+   ❯ Y
+
+   ? What would you like to name this column:
+   ❯ totalScore
+   ? Choose the data type:
+   ❯ number
+
+   ? Would you like to add another column? (Y/n)
+   ❯ Y
+
+   ? What would you like to name this column:
+   ❯ timestamp
+   ? Choose the data type:
+   ❯ string
+
+   ? Would you like to add another column? (Y/n)
+   ❯ n
+    ? Choose partition key:
+   ❯ PK
+
+   ? Choose sort key:
+   ❯ SK
+
+      ? Do you want to add global secondary indexes to your table? (Y/n)
+   ❯ Y
+
+   ? Provide the GSI name:
+   ❯ GSI1
+
+   ? Choose partition key for the GSI:
+   ❯ gameType
+
+   ? Choose the data type:
+   ❯ string
+
+   ? Do you want to add a sort key to your global secondary index?
+   ❯ Y
+
+   ? Choose sort key for the GSI:
+   ❯ totalScore
+
+   ? Choose the data type:
+   ❯ number
+
+   ? Do you want to add more global secondary indexes?
+   ❯ n
+
+      ? Do you want to add a Lambda Trigger for your Table? (y/N)
+   ❯ N
+
+
+    amplify push
