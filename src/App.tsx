@@ -6,6 +6,7 @@ import { Home } from './pages/Home';
 import { Games } from './pages/Games';
 import { Leaderboard } from './pages/Leaderboard';
 import { Feedback } from './pages/Feedback';
+import { Settings } from './pages/Settings';
 import { KingdomBuilders } from './games/kingdom-builders/KingdomBuilders';
 import { ArkEscape } from './games/ark-escape/ArkEscape';
 import { BibleCharades } from './games/bible-charades/BibleCharades';
@@ -14,8 +15,10 @@ import { TestamentQuiz } from './games/testament-quiz/TestamentQuiz';
 import { ScriptureSprint } from './games/ap-mo-bible-pack/ScriptureSprint';
 import { authService } from './services/auth';
 import { useAuthStore } from './store/useAuthStore';
+import { useGameProgressStore } from './store/useGameProgressStore';
 import { initializeAnalytics } from './services/analytics/config';
 import { analyticsService } from './services/analytics/analyticsService';
+import { reminderService } from './services/reminder/reminderService';
 import { ThemeSelector } from './components/ui/ThemeSelector';
 
 // Analytics tracker component
@@ -44,6 +47,7 @@ const NotFound = () => {
 
 const App: React.FC = () => {
   const login = useAuthStore((state) => state.login);
+  const { syncWithCloud, reminderSettings } = useGameProgressStore();
 
   useEffect(() => {
     // Initialize Google Analytics
@@ -55,6 +59,8 @@ const App: React.FC = () => {
         if (user) {
           login(user);
           analyticsService.trackAuth('login', user.id);
+          // Sync progress data when user logs in
+          await syncWithCloud();
         }
       } catch (error) {
         console.error('Error checking auth status:', error);
@@ -62,7 +68,19 @@ const App: React.FC = () => {
     };
 
     checkAuth();
-  }, [login]);
+  }, [login, syncWithCloud]);
+
+  // Initialize reminder service
+  useEffect(() => {
+    if (reminderSettings.enabled) {
+      reminderService.startWorker();
+      reminderService.scheduleReminders();
+    }
+
+    return () => {
+      reminderService.stopWorker();
+    };
+  }, [reminderSettings.enabled]);
 
   return (
     <Router>
@@ -75,6 +93,7 @@ const App: React.FC = () => {
             <Route path="/games" element={<Games />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/feedback" element={<Feedback />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/games/kingdom-builders" element={<KingdomBuilders />} />
             <Route path="/games/ark-escape" element={<ArkEscape />} />
             <Route path="/games/bible-charades" element={<BibleCharades />} />

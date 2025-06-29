@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { CrownIcon, Trophy, MessageSquare, Menu, X } from 'lucide-react';
+import { CrownIcon, Trophy, MessageSquare, Settings, Menu, X } from 'lucide-react';
 import { UserMenu } from '../auth/UserMenu';
 import { useThemeStore } from '../../store/useThemeStore';
 
@@ -50,6 +50,17 @@ export const Navbar: React.FC = () => {
               >
                 <Trophy className="w-4 h-4 mr-1" />
                 Leaderboard
+              </Link>
+              <Link 
+                to="/settings" 
+                className={`flex items-center px-3 py-2 rounded-md transition-all duration-300 ${
+                  theme === 'night'
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-indigo-50'
+                }`}
+              >
+                <Settings className="w-4 h-4 mr-1" />
+                Settings
               </Link>
               <Link 
                 to="/feedback" 

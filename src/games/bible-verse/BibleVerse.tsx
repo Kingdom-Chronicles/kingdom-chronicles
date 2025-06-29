@@ -3,11 +3,13 @@ import { Book } from 'lucide-react';
 import { useGameState } from './hooks/useGameState';
 import { useRoundManager } from '../shared/hooks/useRoundManager';
 import { useGameScore } from '../../hooks/useGameScore';
+import { useGameProgressStore } from '../../store/useGameProgressStore';
 import { RoundTimer } from '../../components/game/RoundTimer';
 import { GameSetup } from './components/GameSetup';
 import { VerseDisplay } from './components/VerseDisplay';
 import { BibleInterface } from './components/BibleInterface';
 import { GameOver } from './components/GameOver';
+import { StreakDisplay } from '../ap-mo-bible-pack/components/StreakDisplay';
 import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
 import type { GameSettings } from './types';
 import { analyticsService } from '../../services/analytics/analyticsService';
@@ -20,7 +22,8 @@ export const BibleVerse: React.FC = () => {
     setSelectedVerse,
     calculateScore,
     resetGame,
-    versesFound
+    versesFound,
+    attempts
   } = useGameState();
 
   const {
@@ -36,6 +39,19 @@ export const BibleVerse: React.FC = () => {
   } = useRoundManager();
 
   const { handleScoreUpdate } = useGameScore('bible-verse');
+  
+  // Progress tracking
+  const { 
+    updateLastPlayed, 
+    addFailedAnswer, 
+    streak,
+    syncWithCloud 
+  } = useGameProgressStore();
+
+  // Sync with cloud when component mounts (for authenticated users)
+  useEffect(() => {
+    syncWithCloud();
+  }, [syncWithCloud]);
 
   const handleRoundEnd = useCallback(() => {
     if (!settings) return;
@@ -45,9 +61,30 @@ export const BibleVerse: React.FC = () => {
     analyticsService.trackGameEnd('bible-verse', score.points, duration);
     
     handleScoreUpdate(score.points);
+
+    // Track failed answers for reminders - add defensive check for attempts
+    if (attempts) {
+      attempts.forEach(attempt => {
+        if (!attempt.isCorrect) {
+          addFailedAnswer({
+            gameType: 'bible-verse',
+            question: `Find the verse: "${attempt.verseText.substring(0, 50)}..."`,
+            correctAnswer: attempt.correctReference,
+            userAnswer: attempt.userAnswer || 'No answer',
+            timestamp: new Date().toISOString()
+          });
+        }
+      });
+    }
+
+    // Update last played when round ends
+    if (currentRound >= settings.totalRounds) {
+      updateLastPlayed('bible-verse');
+    }
+    
     endRound(score);
     resetGame();
-  }, [calculateScore, handleScoreUpdate, endRound, resetGame, settings, timeLeft]);
+  }, [calculateScore, handleScoreUpdate, endRound, resetGame, settings, timeLeft, attempts, addFailedAnswer, currentRound, updateLastPlayed]);
 
   useEffect(() => {
     if (!isPlaying || timeLeft <= 0) return;
@@ -77,9 +114,18 @@ export const BibleVerse: React.FC = () => {
         spread: 70,
         origin: { y: 0.6 }
       });
+    } else {
+      // Track failed answer immediately when it happens
+      addFailedAnswer({
+        gameType: 'bible-verse',
+        question: `Find the verse: "${currentVerse.text.substring(0, 50)}..."`,
+        correctAnswer: currentVerse.reference,
+        userAnswer: verse,
+        timestamp: new Date().toISOString()
+      });
     }
     setSelectedVerse(verse);
-  }, [isPlaying, timeLeft, currentVerse, setSelectedVerse]);
+  }, [isPlaying, timeLeft, currentVerse, setSelectedVerse, addFailedAnswer]);
 
   // Show game over screen if we've completed all rounds
   if (!isPlaying && settings && roundScores.length >= settings.totalRounds) {
@@ -88,6 +134,12 @@ export const BibleVerse: React.FC = () => {
         <MobileGameHeader title="Find the Bible Verse" />
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="content-container">
+            <div className="text-center mb-6">
+              <StreakDisplay 
+                gameType="bible-verse" 
+                currentStreak={streak['bible-verse']} 
+              />
+            </div>
             <GameOver 
               scores={roundScores}
               onPlayAgain={() => {
@@ -112,8 +164,12 @@ export const BibleVerse: React.FC = () => {
           {!isPlaying || !settings ? (
             <div className="max-w-4xl mx-auto p-4">
               <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold mb-2">Find the Bible Verse</h1>
+                <h1 className="text-3xl font-bold mb-2 text-white">Find the Bible Verse</h1>
                 <p className="text-gray-600">Race against time to locate Bible verses!</p>
+                <StreakDisplay 
+                  gameType="bible-verse" 
+                  currentStreak={streak['bible-verse']} 
+                />
               </div>
               <GameSetup onGameStart={handleGameStart} />
             </div>
@@ -121,6 +177,10 @@ export const BibleVerse: React.FC = () => {
             <>
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold">Round {currentRound} of {settings.totalRounds}</h2>
+                <StreakDisplay 
+                  gameType="bible-verse" 
+                  currentStreak={streak['bible-verse']} 
+                />
                 <RoundTimer timeLeft={timeLeft} />
                 <div className="mt-2">
                   <span className="font-semibold">Verses Found: </span>

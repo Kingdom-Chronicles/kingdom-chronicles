@@ -113,27 +113,29 @@ export const gameManuals: Record<string, GameManual> = {
   },
   'kingdom-builders': {
     id: 'kingdom-builders',
-    title: 'Kingdom Builders',
+    title: 'Bible Story Adventures',
     icon: Crown,
-    description: 'Build and manage your Biblical kingdom with wisdom and strategy.',
+    description: 'Experience 5 amazing Bible stories through interactive adventures designed for children.',
     howToPlay: [
-      'Start with initial resources',
-      'Choose buildings to construct',
-      'Place buildings strategically on the grid',
-      'Create combinations for bonus points',
-      'Complete objectives within the time limit'
+      'Complete 5 Bible story levels in order',
+      'Level 1: Help God create the world by placing items in order',
+      'Level 2: Build Noah\'s ark and gather animals two by two',
+      'Level 3: Collect smooth stones and help David defeat Goliath',
+      'Level 4: Calm lions and find prayer spots with Daniel',
+      'Level 5: Help Zacchaeus climb the tree and learn about sharing'
     ],
     scoring: [
-      'Basic Building: +10-30 points',
-      'Adjacent Bonus: +50 points',
-      'Completed Section: +200 points',
-      'Resource Efficiency: +0.5 points per unused resource'
+      'Level Completion: +500 points',
+      'Time Bonus: +2 points per second remaining',
+      'Perfect Level: +200 bonus points',
+      'Each Action: +10-50 points depending on difficulty'
     ],
     tips: [
-      'Plan your building placement carefully',
-      'Create synergies between different buildings',
-      'Balance resource usage with scoring potential',
-      'Focus on completing sections for bonus points'
+      'Take your time to understand each story',
+      'Look for visual clues and instructions',
+      'Remember the Bible lessons in each adventure',
+      'Complete levels quickly for bonus points',
+      'Have fun learning about God\'s love!'
     ]
   },
   'ark-escape': {

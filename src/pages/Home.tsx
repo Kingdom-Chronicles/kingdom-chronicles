@@ -41,6 +41,20 @@ export const Home: React.FC = () => {
 
   return (
     <div className={`theme-base min-h-screen ${theme === "night" ? "bg-gray-900" : "bg-gradient-to-b from-indigo-50 to-white"}`}>
+      {/* Bolt.new Badge */}
+      <a 
+        href="https://bolt.new/" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="fixed top-4 right-4 z-50 w-16 h-16 md:w-20 md:h-20 transition-transform hover:scale-110"
+      >
+        <img 
+          src={theme === "night" ? "/white_circle_360x360.png" : "/black_circle_360x360.png"} 
+          alt="Powered by Bolt.new" 
+          className="w-full h-full"
+        />
+      </a>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         <div className="text-center">
           <h1 className={`text-5xl font-bold mb-6 slide-in ${theme === "night" ? "text-white" : "text-gray-900"}`}>

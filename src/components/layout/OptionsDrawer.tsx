@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { X, Palette, MessageSquare, LogIn, UserX } from 'lucide-react';
+import { X, Palette, MessageSquare, LogIn, UserX, Bell } from 'lucide-react';
 import { useThemeStore } from '../../store/useThemeStore';
 import { useAuthStore } from '../../store/useAuthStore';
 import { LoginModal } from '../auth/LoginModal';
@@ -47,6 +47,20 @@ export const OptionsDrawer: React.FC<OptionsDrawerProps> = ({ isOpen, onClose })
           </div>
 
           <div className="space-y-4">
+            {/* Settings/Notifications */}
+            <Link
+              to="/settings"
+              onClick={onClose}
+              className={`w-full flex items-center p-3 rounded-lg ${
+                theme === 'night'
+                  ? 'text-gray-300 hover:bg-gray-700'
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <Bell className="w-5 h-5 mr-3" />
+              <span>Notifications & Settings</span>
+            </Link>
+
             {!shouldHideThemeButton && (
               <button
                 onClick={() => {

@@ -2,12 +2,14 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useGameState } from './hooks/useGameState';
 import { useRoundManager } from '../shared/hooks/useRoundManager';
 import { useGameScore } from '../../hooks/useGameScore';
+import { useGameProgressStore } from '../../store/useGameProgressStore';
 import { RoundTimer } from '../../components/game/RoundTimer';
 import { GameSetup } from './components/GameSetup';
 import { VerseDisplay } from './components/VerseDisplay';
 import { VerseInput } from './components/VerseInput';
 import { GameSummary } from './components/GameSummary';
 import { MobileGameHeader } from '../../components/layout/MobileGameHeader';
+import { StreakDisplay } from './components/StreakDisplay';
 import type { GameSettings, VerseAttempt } from './types';
 import { analyticsService } from '../../services/analytics/analyticsService';
 import confetti from 'canvas-confetti';
@@ -43,6 +45,19 @@ export const ScriptureSprint: React.FC = () => {
   } = useRoundManager();
 
   const { handleScoreUpdate } = useGameScore('scripture-sprint');
+  
+  // Progress tracking
+  const { 
+    updateLastPlayed, 
+    addFailedAnswer, 
+    streak,
+    syncWithCloud 
+  } = useGameProgressStore();
+
+  // Sync with cloud when component mounts (for authenticated users)
+  useEffect(() => {
+    syncWithCloud();
+  }, [syncWithCloud]);
 
   const handleRoundEnd = useCallback(() => {
     if (!settings) return;
@@ -53,16 +68,29 @@ export const ScriptureSprint: React.FC = () => {
     analyticsService.trackGameEnd('scripture-sprint', score.points, duration);
     handleScoreUpdate(score.points);
 
+    // Track failed answers for reminders
+    failedVerses.forEach(attempt => {
+      addFailedAnswer({
+        gameType: 'scripture-sprint',
+        question: `Complete the verse from ${attempt.verse}`,
+        correctAnswer: attempt.expectedAnswer,
+        userAnswer: attempt.userAnswer || 'No answer provided',
+        timestamp: new Date().toISOString()
+      });
+    });
+
     setAllFailedVerses(prev => [...prev, ...failedVerses]);
 
     if (currentRound >= settings.totalRounds) {
       setShowSummary(true);
+      // Update last played when game is complete
+      updateLastPlayed('scripture-sprint');
     }
     
     endRound(score);
     resetGame();
     setInputValue('');
-  }, [calculateScore, handleScoreUpdate, endRound, resetGame, settings, timeLeft, currentRound, failedVerses]);
+  }, [calculateScore, handleScoreUpdate, endRound, resetGame, settings, timeLeft, currentRound, failedVerses, addFailedAnswer, updateLastPlayed]);
 
   useEffect(() => {
     if (!isPlaying || timeLeft <= 0) return;
@@ -104,8 +132,19 @@ export const ScriptureSprint: React.FC = () => {
         getNextVerse();
         setInputValue('');
       }, 1500);
+    } else {
+      // Track failed answer immediately when it happens
+      if (currentVerse && result.attemptsLeft === 0) {
+        addFailedAnswer({
+          gameType: 'scripture-sprint',
+          question: `Complete the verse from ${currentVerse.verse}`,
+          correctAnswer: getVerseText(currentVerse),
+          userAnswer: answer || 'No answer provided',
+          timestamp: new Date().toISOString()
+        });
+      }
     }
-  }, [checkAnswer, incrementVersesCompleted, getNextVerse]);
+  }, [checkAnswer, incrementVersesCompleted, getNextVerse, currentVerse, getVerseText, addFailedAnswer]);
 
   const handlePlayAgain = useCallback(() => {
     setShowSummary(false);
@@ -126,6 +165,10 @@ export const ScriptureSprint: React.FC = () => {
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold mb-2">Game Complete!</h1>
               <p className="text-gray-600">Final Score: {getTotalScore()}</p>
+              <StreakDisplay 
+                gameType="scripture-sprint" 
+                currentStreak={streak['scripture-sprint']} 
+              />
               <GameSummary 
                 failedVerses={allFailedVerses}
                 onPlayAgain={handlePlayAgain}
@@ -136,12 +179,20 @@ export const ScriptureSprint: React.FC = () => {
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold mb-2">Scripture Sprint</h1>
               <p className="text-gray-600">Race against time to complete Bible verses!</p>
+              <StreakDisplay 
+                gameType="scripture-sprint" 
+                currentStreak={streak['scripture-sprint']} 
+              />
               <GameSetup onGameStart={handleGameStart} />
             </div>
           ) : (
             <>
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold">Round {currentRound} of {settings.totalRounds}</h2>
+                <StreakDisplay 
+                  gameType="scripture-sprint" 
+                  currentStreak={streak['scripture-sprint']} 
+                />
                 <RoundTimer timeLeft={timeLeft} />
                 <div className="mt-2">
                   <span className="font-semibold">Verses Completed: </span>
